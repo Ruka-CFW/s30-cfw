@@ -1,1 +1,1 @@
-# PocketGo S3 CFW
+# PocketGo S30 CFW
