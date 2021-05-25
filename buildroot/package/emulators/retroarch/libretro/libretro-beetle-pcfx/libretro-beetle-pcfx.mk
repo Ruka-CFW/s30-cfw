@@ -3,14 +3,14 @@
 # BEETLE_PCFX
 #
 ################################################################################
-# Version.: Commits on Jan 13, 2021
-LIBRETRO_BEETLE_PCFX_VERSION = f5a9ccbaf1c858ded4a74f3bcbd4cde21d45381c
+# Version.: Commits on Mar 24, 2021
+LIBRETRO_BEETLE_PCFX_VERSION = 63cfa4d286402a1836ac34afb65cd2915e72e3c3
 LIBRETRO_BEETLE_PCFX_SITE = $(call github,libretro,beetle-pcfx-libretro,$(LIBRETRO_BEETLE_PCFX_VERSION))
 LIBRETRO_BEETLE_PCFX_LICENSE = GPLv2
 
 LIBRETRO_BEETLE_PCFX_PLATFORM = $(LIBRETRO_PLATFORM)
 
-ifeq ($(BR2_PACKAGE_BATOCERA_TARGET_ODROIDN2),y)
+ifeq ($(BR2_PACKAGE_BATOCERA_TARGET_S922X),y)
 	LIBRETRO_BEETLE_PCFX_PLATFORM = CortexA73_G12B
 endif
 

@@ -2047,6 +2047,7 @@ endmenu
 
 menu "Libretro cores and retroarch"
 	source "package/emulators/Config.in"
+	source "package/emulationstation/Config.in"
 endmenu
 
 endmenu

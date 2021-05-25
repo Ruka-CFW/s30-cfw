@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-SDL2_VERSION = 2.0.7
+SDL2_VERSION = 2.0.14
 SDL2_SOURCE = SDL2-$(SDL2_VERSION).tar.gz
 SDL2_SITE = http://www.libsdl.org/release
 SDL2_LICENSE = Zlib
@@ -21,6 +21,9 @@ SDL2_CONF_OPTS += \
 
 # We must enable static build to get compilation successful.
 SDL2_CONF_OPTS += --enable-static
+
+# Enable PocketgoS30/Pandora driver
+SDL2_CONF_OPTS += --enable-video-pandora
 
 ifeq ($(BR2_PACKAGE_HAS_UDEV),y)
 SDL2_DEPENDENCIES += udev

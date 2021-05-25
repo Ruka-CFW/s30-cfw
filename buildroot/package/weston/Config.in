@@ -33,13 +33,17 @@ if BR2_PACKAGE_WESTON
 choice
 	prompt "default compositor"
 
+config BR2_PACKAGE_WESTON_DEFAULT_FBDEV
+	bool "fbdev"
+	select BR2_PACKAGE_WESTON_FBDEV
+
 config BR2_PACKAGE_WESTON_DEFAULT_DRM
 	bool "drm"
-	depends on BR2_PACKAGE_HAS_LIBEGL
+	depends on BR2_PACKAGE_MESA3D_OPENGL_EGL || BR2_PACKAGE_IMX_GPU_VIV_OUTPUT_WL
 	select BR2_PACKAGE_WESTON_DRM
 
-comment "drm backend needs EGL driver"
-	depends on !BR2_PACKAGE_HAS_LIBEGL
+comment "drm backend needs mesa3d w/ EGL driver"
+	depends on !BR2_PACKAGE_MESA3D_OPENGL_EGL && !BR2_PACKAGE_IMX_GPU_VIV_OUTPUT_WL
 
 config BR2_PACKAGE_WESTON_DEFAULT_X11
 	bool "X11"
@@ -48,10 +52,6 @@ config BR2_PACKAGE_WESTON_DEFAULT_X11
 
 comment "X11 backend needs X.org"
 	depends on !BR2_PACKAGE_XORG7
-
-config BR2_PACKAGE_WESTON_DEFAULT_FBDEV
-	bool "fbdev"
-	select BR2_PACKAGE_WESTON_FBDEV
 
 endchoice
 
@@ -63,10 +63,11 @@ config BR2_PACKAGE_WESTON_DEFAULT_COMPOSITOR
 
 config BR2_PACKAGE_WESTON_DRM
 	bool "DRM compositor"
-	depends on BR2_PACKAGE_HAS_LIBEGL
+	depends on BR2_PACKAGE_MESA3D_OPENGL_EGL || BR2_PACKAGE_IMX_GPU_VIV_OUTPUT_WL
 
-comment "DRM compositor needs an OpenGL EGL backend"
-	depends on !BR2_PACKAGE_HAS_LIBEGL
+# Uses libgbm from mesa3d
+comment "DRM compositor needs an OpenGL EGL backend provided by mesa3d"
+	depends on !BR2_PACKAGE_MESA3D_OPENGL_EGL && !BR2_PACKAGE_IMX_GPU_VIV_OUTPUT_WL
 
 config BR2_PACKAGE_WESTON_FBDEV
 	bool "fbdev compositor"

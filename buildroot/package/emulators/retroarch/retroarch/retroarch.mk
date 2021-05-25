@@ -4,7 +4,7 @@
 #
 ################################################################################
 # Version.: Commits on Aug 09, 2020
-RETROARCH_VERSION = v1.9.1
+RETROARCH_VERSION = v1.9.2
 RETROARCH_SITE = $(call github,libretro,RetroArch,$(RETROARCH_VERSION))
 #RETROARCH_SITE = $(call github, bkacjios, RetroArch)
 RETROARCH_LICENSE = GPLv3+

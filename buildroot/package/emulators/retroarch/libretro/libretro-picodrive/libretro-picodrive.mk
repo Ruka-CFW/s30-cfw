@@ -3,8 +3,8 @@
 # libretro-picodrive
 #
 ################################################################################
-# Version.: Commits on Mar 22, 2021
-LIBRETRO_PICODRIVE_VERSION = bcc34f2cf8f0ca044676ffb55e0d8de1361d10be
+# Version.: Commits on Apr 2, 2021
+LIBRETRO_PICODRIVE_VERSION = v1.98
 LIBRETRO_PICODRIVE_SITE = https://github.com/irixxxx/picodrive.git
 LIBRETRO_PICODRIVE_SITE_METHOD=git
 LIBRETRO_PICODRIVE_GIT_SUBMODULES=YES
@@ -14,7 +14,7 @@ LIBRETRO_PICODRIVE_LICENSE = MAME
 LIBRETRO_PICODRIVE_PLATFORM = $(LIBRETRO_PLATFORM)
 
 ifeq ($(BR2_arm),y)
-  LIBRETRO_PICODRIVE_PLATFORM += armasm
+  LIBRETRO_PICODRIVE_PLATFORM += armv neon hardfloat
 endif
 
 ifeq ($(BR2_aarch64),y)
@@ -23,12 +23,6 @@ endif
 
 ifeq ($(BR2_PACKAGE_BATOCERA_TARGET_X86_ANY),y)
   LIBRETRO_PICODRIVE_PLATFORM = unix
-endif
-
-ifeq ($(BR2_PACKAGE_BATOCERA_TARGET_RPI3)$(BR2_PACKAGE_BATOCERA_TARGET_S812),y)
-LIBRETRO_PICODRIVE_PLATFORM = armv neon
-else ifeq ($(BR2_PACKAGE_BATOCERA_TARGET_ODROIDGOA)$(BR2_arm),yy)
-LIBRETRO_PICODRIVE_PLATFORM = armv neon
 endif
 
 define LIBRETRO_PICODRIVE_BUILD_CMDS

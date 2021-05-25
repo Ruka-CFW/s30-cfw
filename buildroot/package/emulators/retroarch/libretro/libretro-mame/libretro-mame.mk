@@ -7,8 +7,10 @@
 LIBRETRO_MAME_VERSION =  4b1001771c0394b6cb9f54c19f7d11aeaf0821dd
 LIBRETRO_MAME_SITE = $(call github,libretro,mame,$(LIBRETRO_MAME_VERSION))
 LIBRETRO_MAME_LICENSE = MAME
-# install in staging for debugging (gdb)
-LIBRETRO_MAME_INSTALL_STAGING=YES
+LIBRETRO_MAME_DEPENDENCIES = retroarch
+
+# Limit number of jobs not to eat too much RAM....
+LIBRETRO_MAME_JOBS=4
 
 ifeq ($(BR2_x86_64),y)
 	LIBRETRO_MAME_EXTRA_ARGS += PTR64=1 LIBRETRO_CPU=x86_64 PLATFORM=x86_64
@@ -38,7 +40,7 @@ define LIBRETRO_MAME_BUILD_CMDS
 	# create some dirs while with parallelism, sometimes it fails because this directory is missing
 	mkdir -p $(@D)/build/libretro/obj/x64/libretro/src/osd/libretro/libretro-internal
 
-	$(MAKE) -C $(@D)/ OPENMP=1 REGENIE=1 VERBOSE=1 NOWERROR=1 PYTHON_EXECUTABLE=python3            \
+	$(MAKE) -j$(LIBRETRO_MAME_JOBS) -C $(@D)/ OPENMP=1 REGENIE=1 VERBOSE=1 NOWERROR=1 PYTHON_EXECUTABLE=python3            \
 		CONFIG=libretro LIBRETRO_OS="unix" ARCH="" PROJECT="" ARCHOPTS="$(LIBRETRO_MAME_ARCHOPTS)" \
 		DISTRO="debian-stable" OVERRIDE_CC="$(TARGET_CC)" OVERRIDE_CXX="$(TARGET_CXX)"             \
 		OVERRIDE_LD="$(TARGET_LD)" RANLIB="$(TARGET_RANLIB)" AR="$(TARGET_AR)"                     \

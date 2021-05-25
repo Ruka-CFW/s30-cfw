@@ -1,0 +1,26 @@
+From ff18c2ca3af256e9750341d1e2bd625e8a1607ba Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Alberto=20P=C3=A9rez=20Garc=C3=ADa-Plaza?=
+ <alpgarcia@gmail.com>
+Date: Mon, 3 May 2021 22:58:39 +0200
+Subject: [PATCH] Fix GL_BGRA_EXT define
+
+---
+ libretro-common/include/glsym/rglgen_headers.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libretro-common/include/glsym/rglgen_headers.h b/libretro-common/include/glsym/rglgen_headers.h
+index 7b44bef8fb..d96973dd5e 100644
+--- a/libretro-common/include/glsym/rglgen_headers.h
++++ b/libretro-common/include/glsym/rglgen_headers.h
+@@ -43,7 +43,7 @@
+ #endif
+ 
+ #ifndef GL_BGRA_EXT
+-#define GL_BGRA_EXT GL_BGRA
++#define GL_BGRA_EXT 0x80E1
+ #endif
+ 
+ #ifndef GL_LUMINANCE_ALPHA
+-- 
+2.25.1
+

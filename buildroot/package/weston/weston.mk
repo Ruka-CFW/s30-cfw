@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-WESTON_VERSION = 8.0.0
-WESTON_SITE = http://wayland.freedesktop.org/releases
+WESTON_VERSION = 9.0.0
+WESTON_SITE = https://wayland.freedesktop.org/releases
 WESTON_SOURCE = weston-$(WESTON_VERSION).tar.xz
 WESTON_LICENSE = MIT
 WESTON_LICENSE_FILES = COPYING
@@ -13,14 +13,17 @@ WESTON_LICENSE_FILES = COPYING
 WESTON_DEPENDENCIES = host-pkgconf wayland wayland-protocols \
 	libxkbcommon pixman libpng jpeg udev cairo libinput libdrm
 
-ifeq ($(BR2_PACKAGE_LINUX_RGA),y)
-WESTON_DEPENDENCIES += linux-rga
-endif
-
 WESTON_CONF_OPTS = \
 	-Dbackend-headless=false \
 	-Dcolor-management-colord=false \
 	-Dremoting=false
+
+# Uses VIDIOC_EXPBUF, only available from 3.8+
+ifeq ($(BR2_TOOLCHAIN_HEADERS_AT_LEAST_3_8),y)
+WESTON_CONF_OPTS += -Dsimple-clients=dmabuf-v4l
+else
+WESTON_CONF_OPTS += -Dsimple-clients=
+endif
 
 ifeq ($(BR2_PACKAGE_DBUS)$(BR2_PACKAGE_SYSTEMD),yy)
 WESTON_CONF_OPTS += -Dlauncher-logind=true
@@ -53,11 +56,16 @@ endif
 ifeq ($(BR2_PACKAGE_HAS_LIBEGL_WAYLAND)$(BR2_PACKAGE_HAS_LIBGLES),yy)
 WESTON_CONF_OPTS += -Drenderer-gl=true
 WESTON_DEPENDENCIES += libegl libgles
-WESTON_CONF_OPTS += -Dsimple-clients=all
+ifeq ($(BR2_PACKAGE_PIPEWIRE)$(BR2_PACKAGE_WESTON_DRM),yy)
+WESTON_CONF_OPTS += -Dpipewire=true
+WESTON_DEPENDENCIES += pipewire
+else
+WESTON_CONF_OPTS += -Dpipewire=false
+endif
 else
 WESTON_CONF_OPTS += \
-	-Drenderer-gl=false
-WESTON_CONF_OPTS += -Dsimple-clients=
+	-Drenderer-gl=false \
+	-Dpipewire=false
 endif
 
 ifeq ($(BR2_PACKAGE_WESTON_RDP),y)
@@ -124,32 +132,11 @@ else
 WESTON_CONF_OPTS += -Dtest-junit-xml=false
 endif
 
-ifeq ($(BR2_PACKAGE_PIPEWIRE)$(BR2_PACKAGE_WESTON_DRM),yy)
-WESTON_CONF_OPTS += -Dpipewire=true
-WESTON_DEPENDENCIES += pipewire
-else
-WESTON_CONF_OPTS += -Dpipewire=false
-endif
-
 ifeq ($(BR2_PACKAGE_WESTON_DEMO_CLIENTS),y)
 WESTON_CONF_OPTS += -Ddemo-clients=true
 WESTON_DEPENDENCIES += pango
 else
 WESTON_CONF_OPTS += -Ddemo-clients=false
 endif
-
-define WESTON_INSTALL_TARGET_ENV
-        $(INSTALL) -D -m 0644 $(WESTON_PKGDIR)/weston.sh \
-                $(TARGET_DIR)/etc/profile.d/weston.sh
-endef
-
-WESTON_POST_INSTALL_TARGET_HOOKS += WESTON_INSTALL_TARGET_ENV
-
-define WESTON_INSTALL_TARGET_SCRIPTS
-        $(INSTALL) -D -m 0755 $(@D)/doc/scripts/calibration-helper.bash \
-                $(TARGET_DIR)/bin/weston-calibration-helper.sh
-endef
-
-WESTON_POST_INSTALL_TARGET_HOOKS += WESTON_INSTALL_TARGET_SCRIPTS
 
 $(eval $(meson-package))

@@ -3,14 +3,14 @@
 # PCSXREARMED
 #
 ################################################################################
-# Version.: Commits on Jan 13, 2021
-LIBRETRO_PCSX_VERSION = e3e1b865f7c06f57918b97f7293b5b2959fb7b7d
+# Version.: Commits on Mar 24, 2021
+LIBRETRO_PCSX_VERSION = 3993490baa28964c5e3e8f879b58147184d9b0f7
 LIBRETRO_PCSX_SITE = $(call github,libretro,pcsx_rearmed,$(LIBRETRO_PCSX_VERSION))
 LIBRETRO_PCSX_LICENSE = GPLv2
 
 LIBRETRO_PCSX_PLATFORM = $(LIBRETRO_PLATFORM)
 
-ifeq ($(BR2_PACKAGE_BATOCERA_TARGET_ODROIDN2),y)
+ifeq ($(BR2_PACKAGE_BATOCERA_TARGET_S922X),y)
 LIBRETRO_PCSX_PLATFORM = CortexA73_G12B
 else ifeq ($(BR2_PACKAGE_BATOCERA_TARGET_RPI4),y)
 LIBRETRO_PCSX_PLATFORM = rpi4_64
@@ -28,6 +28,10 @@ endif
 
 ifeq ($(BR2_PACKAGE_BATOCERA_TARGET_S812),y)
         LIBRETRO_PCSX_PLATFORM = armv cortexa9 neon hardfloat
+endif
+
+ifeq ($(BR2_PACKAGE_BATOCERA_TARGET_ORANGEPI_PC),y)
+        LIBRETRO_PCSX_PLATFORM = rpi2
 endif
 
 
