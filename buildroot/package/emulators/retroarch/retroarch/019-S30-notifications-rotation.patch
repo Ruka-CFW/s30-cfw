@@ -1,0 +1,28 @@
+diff --git a/gfx/drivers_font/gl_raster_font.c b/gfx/drivers_font/gl_raster_font.c
+index 45d79df..67fe42b 100644
+--- a/gfx/drivers_font/gl_raster_font.c
++++ b/gfx/drivers_font/gl_raster_font.c
+@@ -273,7 +273,8 @@ static void gl_raster_font_draw_vertices(gl_raster_t *font,
+    {
+       font->gl->shader->set_coords(font->gl->shader_data, coords);
+       font->gl->shader->set_mvp(font->gl->shader_data,
+-            &font->gl->mvp_no_rot);
++            &font->gl->mvp_screen_rot);
++            //&font->gl->mvp_no_rot);
+    }
+ 
+    glDrawArrays(GL_TRIANGLES, 0, coords->vertices);
+diff --git a/gfx/drivers_display/gfx_display_gl.c b/gfx/drivers_display/gfx_display_gl.c
+index ef73b1f..58caf4d 100644
+--- a/gfx/drivers_display/gfx_display_gl.c
++++ b/gfx/drivers_display/gfx_display_gl.c
+@@ -236,7 +236,8 @@ static void gfx_display_gl_draw(gfx_display_ctx_draw_t *draw,
+    if (!draw->coords->lut_tex_coord)
+       draw->coords->lut_tex_coord = &gl_tex_coords[0];
+ 
+-   glViewport(draw->x, draw->y, draw->width, draw->height);
++   glViewport(draw->y, draw->x, draw->height, draw->width);
++   //glViewport(draw->x, draw->y, draw->width, draw->height);
+    glBindTexture(GL_TEXTURE_2D, (GLuint)draw->texture);
+ 
+    gl->shader->set_coords(gl->shader_data, draw->coords);

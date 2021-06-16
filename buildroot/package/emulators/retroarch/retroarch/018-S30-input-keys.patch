@@ -1,0 +1,70 @@
+diff --git a/input/drivers_joypad/sdl_joypad.c b/input/drivers_joypad/sdl_joypad.c
+index 001ae44288..094e8448b2 100644
+--- a/input/drivers_joypad/sdl_joypad.c
++++ b/input/drivers_joypad/sdl_joypad.c
+@@ -140,6 +140,8 @@ static void sdl_pad_connect(unsigned id)
+ #endif
+ #endif
+ 
++   RARCH_LOG("[SDL]: Autoconfigure device %s:%d:%d:%d\n", sdl_joypad_name(id), id, vendor, product);
++
+    input_autoconfigure_connect(
+          sdl_joypad_name(id),
+          NULL,
+@@ -265,6 +267,9 @@ static void *sdl_joypad_init(void *data)
+    }
+ 
+ #if HAVE_SDL2
++   SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
++   SDL_SetHint("SDL_JOYSTICK_CALIBRATION_FILE", "/mnt/extsd/calibration.dat");
++
+    g_has_haptic = false;
+ 
+    /* Initialise haptic subsystem, if required */
+diff --git a/input/input_keymaps.c b/input/input_keymaps.c
+index 26d50b9f0d..e168abca04 100644
+--- a/input/input_keymaps.c
++++ b/input/input_keymaps.c
+@@ -195,6 +195,10 @@ const struct input_key_map input_config_key_map[] = {
+    { "clear", RETROK_CLEAR },
+    { "oem102", RETROK_OEM_102 },
+ 
++   { "lbrace", RETROK_LEFTBRACE },
++   { "rbrace", RETROK_RIGHTBRACE },
++   { "select", RETROK_SELECT },
++
+    { "nul", RETROK_UNKNOWN },
+    { NULL, RETROK_UNKNOWN },
+ };
+@@ -634,6 +638,16 @@ const struct rarch_key_map rarch_key_map_sdl[] = {
+ #endif
+    { SDLK_UNDO, RETROK_UNDO },
+ 
++   // For PocketGo S30
++   { SDLK_KP_LEFTBRACE, RETROK_LEFTBRACE }, //  L1
++   { SDLK_KP_RIGHTBRACE, RETROK_RIGHTBRACE }, // R1
++   { SDLK_KP_LEFTPAREN, RETROK_LEFTPAREN }, // L2
++   { SDLK_KP_RIGHTPAREN, RETROK_RIGHTPAREN }, // R2
++   { SDLK_SELECT, RETROK_SELECT }, // Select
++   //{ SDLK_POWER, RETROK_ESCAPE}, // Power
++   //{ SDLK_VOLUMEUP, RETROK_KP_PLUS }, //  Volume up
++   //{ SDLK_VOLUMEDOWN, RETROK_KP_MINUS }, // Volume down
++
+    { 0, RETROK_UNKNOWN },
+ };
+ #endif
+diff --git a/libretro-common/include/libretro.h b/libretro-common/include/libretro.h
+index 8a5da8648b..bc56de24d8 100644
+--- a/libretro-common/include/libretro.h
++++ b/libretro-common/include/libretro.h
+@@ -464,6 +464,9 @@ enum retro_key
+    RETROK_UNDO           = 322,
+    RETROK_OEM_102        = 323,
+ 
++   // PocketGo S30 Additions
++   RETROK_SELECT         = 324,
++
+    RETROK_LAST,
+ 
+    RETROK_DUMMY          = INT_MAX /* Ensure sizeof(enum) == sizeof(int) */
+ 

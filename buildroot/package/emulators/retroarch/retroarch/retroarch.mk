@@ -3,19 +3,16 @@
 # retroarch
 #
 ################################################################################
-# Version.: Commits on Aug 09, 2020
-RETROARCH_VERSION = v1.9.2
+# Version.: Release on May 29, 2021
+RETROARCH_VERSION = v1.9.4
 RETROARCH_SITE = $(call github,libretro,RetroArch,$(RETROARCH_VERSION))
-#RETROARCH_SITE = $(call github, bkacjios, RetroArch)
 RETROARCH_LICENSE = GPLv3+
-RETROARCH_DEPENDENCIES = host-pkgconf dejavu flac 
+RETROARCH_DEPENDENCIES = host-pkgconf dejavu flac
 # install in staging for debugging (gdb)
 RETROARCH_INSTALL_STAGING = YES
 
-RETROARCH_CONF_OPTS = --disable-oss --enable-zlib --disable-qt --enable-threads --enable-ozone --enable-xmb --disable-discord --disable-git_version
-RETROARCH_CONF_OPTS += --enable-flac --enable-lua --enable-networking --enable-translate --enable-rgui --disable-cdrom --disable-wayland
-
-RETROARCH_TARGET_CFLAGS += -DMESA_EGL_NO_X11_HEADERS -DEGL_NO_X11
+RETROARCH_CONF_OPTS = --disable-oss --enable-zlib --disable-qt --enable-threads --enable-ozone --enable-xmb --disable-discord
+RETROARCH_CONF_OPTS += --enable-flac --enable-lua --enable-networking --enable-translate --enable-rgui --disable-cdrom
 
 ifeq ($(BR2_PACKAGE_FFMPEG),y)
 	RETROARCH_CONF_OPTS += --enable-ffmpeg
@@ -51,12 +48,12 @@ endif
 
 # x86 : no option
 
-#ifeq ($(BR2_PACKAGE_XORG7),y)
-#	RETROARCH_CONF_OPTS += --enable-x11
-#	RETROARCH_DEPENDENCIES += xserver_xorg-server
-#else
+ifeq ($(BR2_PACKAGE_XORG7),y)
+	RETROARCH_CONF_OPTS += --enable-x11
+	RETROARCH_DEPENDENCIES += xserver_xorg-server
+else
 	RETROARCH_CONF_OPTS += --disable-x11
-#endif
+endif
 
 ifeq ($(BR2_PACKAGE_ALSA_LIB),y)
 	RETROARCH_CONF_OPTS += --enable-alsa
