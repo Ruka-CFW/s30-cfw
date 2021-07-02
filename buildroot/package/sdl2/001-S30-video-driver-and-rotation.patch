@@ -160,203 +160,6 @@
 +    /* 127 */   SDL_SCANCODE_UNKNOWN
 +};
 +/* *INDENT-ON* */
---- a/src/joystick/SDL_joystick.c	2020-12-21 12:44:36.000000000 -0500
-+++ b/src/joystick/SDL_joystick.c	2021-05-18 10:28:12.807262292 -0400
-@@ -90,6 +90,8 @@
-     &SDL_DUMMY_JoystickDriver
- #endif
- };
-+
-+static SDL_bool SDL_joystick_ignore_calibration = SDL_FALSE;
- static SDL_bool SDL_joystick_allows_background_events = SDL_FALSE;
- static SDL_Joystick *SDL_joysticks = NULL;
- static SDL_bool SDL_updating_joystick = SDL_FALSE;
-@@ -98,6 +100,20 @@
- static int SDL_joystick_player_count = 0;
- static SDL_JoystickID *SDL_joystick_players = NULL;
- 
-+#define JOY_MIN -32768
-+#define JOY_MAX 32767
-+
-+struct calibration_struct {
-+    Sint16 min_x;
-+    Sint16 min_y;
-+    Sint16 max_x;
-+    Sint16 max_y;
-+    Sint16 origin_x;
-+    Sint16 origin_y;
-+};
-+
-+static struct calibration_struct JOY_CALIB = { JOY_MIN, JOY_MIN, JOY_MAX, JOY_MAX, 0, 0 };
-+
- void
- SDL_LockJoysticks(void)
- {
-@@ -209,6 +225,32 @@
-     }
- }
- 
-+static void SDLCALL
-+SDL_JoystickIgnoreCalibrationChanged(void *userdata, const char *name, const char *oldValue, const char *hint)
-+{
-+    if (hint && *hint == '1') {
-+        SDL_joystick_ignore_calibration = SDL_TRUE;
-+    } else {
-+        SDL_joystick_ignore_calibration = SDL_FALSE;
-+    }
-+}
-+
-+static void SDLCALL
-+SDL_JoystickCalibrationFileChanged(void *userdata, const char *name, const char *oldValue, const char *hint)
-+{
-+    FILE *outfile;
-+
-+    outfile = fopen(hint, "r");
-+    if (outfile == NULL) {
-+        return;
-+    }
-+
-+    memset(&JOY_CALIB, 0, sizeof(struct calibration_struct));
-+
-+    fread(&JOY_CALIB, sizeof(struct calibration_struct), 1, outfile); 
-+    fclose(outfile);
-+}
-+
- int
- SDL_JoystickInit(void)
- {
-@@ -225,6 +267,12 @@
-     SDL_AddHintCallback(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS,
-                         SDL_JoystickAllowBackgroundEventsChanged, NULL);
- 
-+    SDL_AddHintCallback(SDL_HINT_JOYSTICK_IGNORE_CALIBRATION,
-+                        SDL_JoystickIgnoreCalibrationChanged, NULL);
-+
-+    SDL_AddHintCallback(SDL_HINT_JOYSTICK_CALIBRATION_FILE,
-+                        SDL_JoystickCalibrationFileChanged, NULL);
-+
- #if !SDL_EVENTS_DISABLED
-     if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0) {
-         return -1;
-@@ -1291,6 +1339,21 @@
-     SDL_UnlockJoysticks();
- }
- 
-+static Sint32 SDL_ScaleBetween(float unscaledNum, float minAllowed, float maxAllowed, float min, float max) {
-+    Sint32 scaled;
-+    // Clamp the value to the min/max just incase it goes over or under
-+    if (unscaledNum < min)
-+        unscaledNum = min;
-+    if (unscaledNum > max)
-+        unscaledNum = max;
-+    scaled = (maxAllowed - minAllowed) * (unscaledNum - min) / (max - min) + minAllowed;
-+    if (scaled < minAllowed)
-+        scaled = minAllowed;
-+    if (scaled > maxAllowed)
-+        scaled = maxAllowed;
-+    return scaled;
-+}
-+
- int
- SDL_PrivateJoystickAxis(SDL_Joystick *joystick, Uint8 axis, Sint16 value)
- {
-@@ -1335,6 +1398,22 @@
-         }
-     }
- 
-+    if (SDL_joystick_ignore_calibration == SDL_FALSE) {
-+        if (axis == 0) {
-+            value -= JOY_CALIB.origin_x;
-+            if (value > 0)
-+                value = SDL_ScaleBetween(value, 0, JOY_MAX, 0, JOY_CALIB.max_x);
-+            else if (value < 0)
-+                value = SDL_ScaleBetween(value, JOY_MIN, 0, JOY_CALIB.min_x, 0);
-+        } else if (axis == 1) {
-+            value -= JOY_CALIB.origin_y;
-+            if (value > 0)
-+                value = SDL_ScaleBetween(value, 0, JOY_MAX, 0, JOY_CALIB.max_y);
-+            else if (value < 0)
-+                value = SDL_ScaleBetween(value, JOY_MIN, 0, JOY_CALIB.min_y, 0);
-+        }
-+    }
-+
-     /* Update internal joystick state */
-     info->value = value;
- 
---- a/src/joystick/linux/SDL_sysjoystick.c	2020-12-21 12:44:36.000000000 -0500
-+++ b/src/joystick/linux/SDL_sysjoystick.c	2021-05-18 10:28:12.811262266 -0400
-@@ -87,6 +87,7 @@
- #if 0
- #define DEBUG_INPUT_EVENTS 1
- #endif
-+#define SDL_DEVICE_S30 1
- 
- typedef enum
- {
-@@ -95,7 +96,11 @@
-     ENUMERATION_FALLBACK
- } EnumerationMethod;
- 
-+#ifndef SDL_DEVICE_S30
- static EnumerationMethod enumeration_method = ENUMERATION_UNSET;
-+#else
-+static EnumerationMethod enumeration_method = ENUMERATION_LIBUDEV;
-+#endif
- 
- static int MaybeAddDevice(const char *path);
- static int MaybeRemoveDevice(const char *path);
-@@ -152,6 +155,7 @@
- }
- #endif /* SDL_JOYSTICK_HIDAPI */
- 
-+#ifndef SDL_DEVICE_S30
- static int
- GuessIsJoystick(int fd)
- {
-@@ -176,6 +180,7 @@
- 
-     return 0;
- }
-+#endif
- 
- static int
- IsJoystick(int fd, char **name_return, SDL_JoystickGUID *guid)
-@@ -185,10 +190,12 @@
-     char *name;
-     char product_string[128];
- 
-+#ifndef SDL_DEVICE_S30
-     /* When udev is enabled we only get joystick devices here, so there's no need to test them */
-     if (enumeration_method != ENUMERATION_LIBUDEV && !GuessIsJoystick(fd)) {
-         return 0;
-     }
-+#endif
- 
-     if (ioctl(fd, EVIOCGID, &inpid) < 0) {
-         return 0;
-@@ -203,6 +210,13 @@
-         return 0;
-     }
- 
-+#ifdef SDL_DEVICE_S30
-+    if (inpid.vendor != 0xdead && inpid.product != 0xbeef) {
-+        SDL_free(name);
-+        return 0;
-+    }
-+#endif
-+
- #ifdef SDL_JOYSTICK_HIDAPI
-     if (!IsVirtualJoystick(inpid.vendor, inpid.product, inpid.version, name) &&
-         HIDAPI_IsDevicePresent(inpid.vendor, inpid.product, inpid.version, name)) {
-@@ -301,7 +315,7 @@
-     }
- 
- #ifdef DEBUG_INPUT_EVENTS
-+    printf("Checking %s (%s)\n", path, name);
--    printf("Checking %s\n", path);
- #endif
- 
-     isstick = IsJoystick(fd, &name, &guid);
 --- a/src/render/SDL_render.c	2020-12-21 12:44:36.000000000 -0500
 +++ b/src/render/SDL_render.c	2021-05-28 15:57:12.329239488 -0400
 @@ -2136,6 +2136,13 @@
@@ -2160,3 +1963,202 @@
  
  /**
   *  \brief  An enumeration of hint priorities
+diff --git a/src/joystick/SDL_joystick.c b/src/joystick/SDL_joystick.c
+index 32eb7c24..0c16536a 100644
+--- a/src/joystick/SDL_joystick.c
++++ b/src/joystick/SDL_joystick.c
+@@ -90,6 +90,8 @@ static SDL_JoystickDriver *SDL_joystick_drivers[] = {
+     &SDL_DUMMY_JoystickDriver
+ #endif
+ };
++
++static SDL_bool SDL_joystick_ignore_calibration = SDL_FALSE;
+ static SDL_bool SDL_joystick_allows_background_events = SDL_FALSE;
+ static SDL_Joystick *SDL_joysticks = NULL;
+ static SDL_bool SDL_updating_joystick = SDL_FALSE;
+@@ -98,6 +100,20 @@ static SDL_atomic_t SDL_next_joystick_instance_id;
+ static int SDL_joystick_player_count = 0;
+ static SDL_JoystickID *SDL_joystick_players = NULL;
+ 
++#define JOY_MIN -32768
++#define JOY_MAX 32767
++
++struct calibration_struct {
++    Sint16 min_x;
++    Sint16 min_y;
++    Sint16 max_x;
++    Sint16 max_y;
++    Sint16 origin_x;
++    Sint16 origin_y;
++};
++
++static struct calibration_struct JOY_CALIB = { JOY_MIN, JOY_MIN, JOY_MAX, JOY_MAX, 0, 0 };
++
+ void
+ SDL_LockJoysticks(void)
+ {
+@@ -209,6 +225,32 @@ SDL_JoystickAllowBackgroundEventsChanged(void *userdata, const char *name, const
+     }
+ }
+ 
++static void SDLCALL
++SDL_JoystickIgnoreCalibrationChanged(void *userdata, const char *name, const char *oldValue, const char *hint)
++{
++    if (hint && *hint == '1') {
++        SDL_joystick_ignore_calibration = SDL_TRUE;
++    } else {
++        SDL_joystick_ignore_calibration = SDL_FALSE;
++    }
++}
++
++static void SDLCALL
++SDL_JoystickCalibrationFileChanged(void *userdata, const char *name, const char *oldValue, const char *hint)
++{
++    FILE *outfile;
++
++    outfile = fopen(hint, "r");
++    if (outfile == NULL) {
++        return;
++    }
++
++    memset(&JOY_CALIB, 0, sizeof(struct calibration_struct));
++
++    fread(&JOY_CALIB, sizeof(struct calibration_struct), 1, outfile); 
++    fclose(outfile);
++}
++
+ int
+ SDL_JoystickInit(void)
+ {
+@@ -225,6 +267,12 @@ SDL_JoystickInit(void)
+     SDL_AddHintCallback(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS,
+                         SDL_JoystickAllowBackgroundEventsChanged, NULL);
+ 
++    SDL_AddHintCallback(SDL_HINT_JOYSTICK_IGNORE_CALIBRATION,
++                        SDL_JoystickIgnoreCalibrationChanged, NULL);
++
++    SDL_AddHintCallback(SDL_HINT_JOYSTICK_CALIBRATION_FILE,
++                        SDL_JoystickCalibrationFileChanged, NULL);
++
+ #if !SDL_EVENTS_DISABLED
+     if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0) {
+         return -1;
+@@ -1291,6 +1339,21 @@ void SDL_PrivateJoystickRemoved(SDL_JoystickID device_instance)
+     SDL_UnlockJoysticks();
+ }
+ 
++static Sint32 SDL_ScaleBetween(float unscaledNum, float minAllowed, float maxAllowed, float min, float max) {
++    Sint32 scaled;
++    // Clamp the value to the min/max just incase it goes over or under
++    if (unscaledNum < min)
++        unscaledNum = min;
++    if (unscaledNum > max)
++        unscaledNum = max;
++    scaled = (maxAllowed - minAllowed) * (unscaledNum - min) / (max - min) + minAllowed;
++    if (scaled < minAllowed)
++        scaled = minAllowed;
++    if (scaled > maxAllowed)
++        scaled = maxAllowed;
++    return scaled;
++}
++
+ int
+ SDL_PrivateJoystickAxis(SDL_Joystick *joystick, Uint8 axis, Sint16 value)
+ {
+@@ -1335,6 +1398,22 @@ SDL_PrivateJoystickAxis(SDL_Joystick *joystick, Uint8 axis, Sint16 value)
+         }
+     }
+ 
++    if (SDL_joystick_ignore_calibration == SDL_FALSE) {
++        if (axis == 0) {
++            value -= JOY_CALIB.origin_x;
++            if (value > 0)
++                value = SDL_ScaleBetween(value, 0, JOY_MAX, 0, JOY_CALIB.max_x);
++            else if (value < 0)
++                value = SDL_ScaleBetween(value, JOY_MIN, 0, JOY_CALIB.min_x, 0);
++        } else if (axis == 1) {
++            value -= JOY_CALIB.origin_y;
++            if (value > 0)
++                value = SDL_ScaleBetween(value, 0, JOY_MAX, 0, JOY_CALIB.max_y);
++            else if (value < 0)
++                value = SDL_ScaleBetween(value, JOY_MIN, 0, JOY_CALIB.min_y, 0);
++        }
++    }
++
+     /* Update internal joystick state */
+     info->value = value;
+ 
+diff --git a/src/joystick/linux/SDL_sysjoystick.c b/src/joystick/linux/SDL_sysjoystick.c
+index ee4a8c19..7cd50733 100644
+--- a/src/joystick/linux/SDL_sysjoystick.c
++++ b/src/joystick/linux/SDL_sysjoystick.c
+@@ -87,6 +87,7 @@
+ #if 0
+ #define DEBUG_INPUT_EVENTS 1
+ #endif
++#define SDL_DEVICE_S30 1
+ 
+ typedef enum
+ {
+@@ -95,7 +96,9 @@ typedef enum
+     ENUMERATION_FALLBACK
+ } EnumerationMethod;
+ 
++#ifndef SDL_DEVICE_S30
+ static EnumerationMethod enumeration_method = ENUMERATION_UNSET;
++#endif
+ 
+ static int MaybeAddDevice(const char *path);
+ static int MaybeRemoveDevice(const char *path);
+@@ -152,6 +155,7 @@ IsVirtualJoystick(Uint16 vendor, Uint16 product, Uint16 version, const char *nam
+ }
+ #endif /* SDL_JOYSTICK_HIDAPI */
+ 
++#ifndef SDL_DEVICE_S30
+ static int
+ GuessIsJoystick(int fd)
+ {
+@@ -176,6 +180,7 @@ GuessIsJoystick(int fd)
+ 
+     return 0;
+ }
++#endif
+ 
+ static int
+ IsJoystick(int fd, char **name_return, SDL_JoystickGUID *guid)
+@@ -185,10 +190,12 @@ IsJoystick(int fd, char **name_return, SDL_JoystickGUID *guid)
+     char *name;
+     char product_string[128];
+ 
++#ifndef SDL_DEVICE_S30
+     /* When udev is enabled we only get joystick devices here, so there's no need to test them */
+     if (enumeration_method != ENUMERATION_LIBUDEV && !GuessIsJoystick(fd)) {
+         return 0;
+     }
++#endif
+ 
+     if (ioctl(fd, EVIOCGID, &inpid) < 0) {
+         return 0;
+@@ -203,6 +210,13 @@ IsJoystick(int fd, char **name_return, SDL_JoystickGUID *guid)
+         return 0;
+     }
+ 
++#ifdef SDL_DEVICE_S30
++    if (inpid.vendor != 0xdead && inpid.product != 0xbeef) {
++        SDL_free(name);
++        return 0;
++    }
++#endif
++
+ #ifdef SDL_JOYSTICK_HIDAPI
+     if (!IsVirtualJoystick(inpid.vendor, inpid.product, inpid.version, name) &&
+         HIDAPI_IsDevicePresent(inpid.vendor, inpid.product, inpid.version, name)) {
+@@ -301,7 +315,7 @@ MaybeAddDevice(const char *path)
+     }
+ 
+ #ifdef DEBUG_INPUT_EVENTS
+-    printf("Checking %s\n", path);
++    printf("Checking %s (%s)\n", path, name);
+ #endif
+ 
+     isstick = IsJoystick(fd, &name, &guid);

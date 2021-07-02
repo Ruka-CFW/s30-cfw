@@ -1,0 +1,622 @@
+diff --git a/command.h b/command.h
+index c9ff24ed1f..f363608291 100644
+--- a/command.h
++++ b/command.h
+@@ -120,6 +120,8 @@ enum event_command
+    CMD_EVENT_VIDEO_SET_BLOCKING_STATE,
+    /* Sets current aspect ratio index. */
+    CMD_EVENT_VIDEO_SET_ASPECT_RATIO,
++   /* Sets screen brightness */
++   CMD_EVENT_VIDEO_SET_BRIGHTNESS,
+    /* Restarts RetroArch. */
+    CMD_EVENT_RESTART_RETROARCH,
+    /* Shutdown the OS */
+diff --git a/config.def.h b/config.def.h
+index e5d8741bb6..c8788f2a89 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -191,6 +191,8 @@
+  * specific monitors, 1 being the first monitor. */
+ #define DEFAULT_MONITOR_INDEX 0
+ 
++#define DEFAULT_BRIGHTNESS 100
++
+ /* Window */
+ /* Window size. A value of 0 uses window scale
+  * multiplied by the core framebuffer size. */
+diff --git a/configuration.c b/configuration.c
+index 8457c586ed..9ec85cbea2 100644
+--- a/configuration.c
++++ b/configuration.c
+@@ -1845,6 +1845,7 @@ static struct config_uint_setting *populate_settings_uint(
+    SETTING_UINT("keyboard_gamepad_mapping_type",&settings->uints.input_keyboard_gamepad_mapping_type, true, 1, false);
+    SETTING_UINT("input_poll_type_behavior",     &settings->uints.input_poll_type_behavior, true, 2, false);
+    SETTING_UINT("video_monitor_index",          &settings->uints.video_monitor_index, true, DEFAULT_MONITOR_INDEX, false);
++   SETTING_UINT("video_brightness",             &settings->uints.video_brightness, true, DEFAULT_BRIGHTNESS, false);
+    SETTING_UINT("video_fullscreen_x",           &settings->uints.video_fullscreen_x,  true, DEFAULT_FULLSCREEN_X, false);
+    SETTING_UINT("video_fullscreen_y",           &settings->uints.video_fullscreen_y,  true, DEFAULT_FULLSCREEN_Y, false);
+    SETTING_UINT("video_window_opacity",         &settings->uints.video_window_opacity, true, DEFAULT_WINDOW_OPACITY, false);
+diff --git a/configuration.h b/configuration.h
+index d9972b3308..13d5da50f9 100644
+--- a/configuration.h
++++ b/configuration.h
+@@ -202,6 +202,7 @@ typedef struct settings
+       unsigned video_record_scale_factor;
+       unsigned video_stream_scale_factor;
+       unsigned video_3ds_display_mode;
++      unsigned video_brightness;
+       unsigned video_dingux_ipu_filter_type;
+ #ifdef HAVE_VIDEO_LAYOUT
+       unsigned video_layout_selected_view;
+diff --git a/gfx/drivers_context/sdl_gl_ctx.c b/gfx/drivers_context/sdl_gl_ctx.c
+index 2a259ef1d3..3b984e33f5 100644
+--- a/gfx/drivers_context/sdl_gl_ctx.c
++++ b/gfx/drivers_context/sdl_gl_ctx.c
+@@ -189,7 +192,7 @@ static bool sdl_ctx_set_video_mode(void *data,
+ 
+    if (sdl->win)
+    {
+-      SDL_SetWindowSize(sdl->win, width, height);
++      SDL_SetWindowSize(sdl->win, height, width);
+ 
+       if (fullscreen)
+          SDL_SetWindowFullscreen(sdl->win, fsflag);
+@@ -200,13 +203,13 @@ static bool sdl_ctx_set_video_mode(void *data,
+ 
+       sdl->win = SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED_DISPLAY(display),
+                                SDL_WINDOWPOS_UNDEFINED_DISPLAY(display),
+-                               width, height, SDL_WINDOW_OPENGL | fsflag);
++                               height, width, SDL_WINDOW_OPENGL | fsflag);
+    }
+ #else
+    if (fullscreen)
+       fsflag = SDL_FULLSCREEN;
+ 
+-   sdl->win = SDL_SetVideoMode(width, height, 0, SDL_OPENGL | fsflag);
++   sdl->win = SDL_SetVideoMode(height, width, 0, SDL_OPENGL | fsflag);
+ #endif
+ 
+    if (!sdl->win)
+@@ -275,8 +278,8 @@ static void sdl_ctx_get_video_size(void *data,
+          mode = **modes;
+ #endif
+ 
+-      *width  = mode.w;
+-      *height = mode.h;
++      *width  = mode.h;
++      *height = mode.w;
+    }
+ }
+ 
+@@ -345,8 +348,8 @@ static void sdl_ctx_check_window(void *data, bool *quit,
+ 
+    if (sdl->resized)
+    {
+-      *width         = sdl->new_width;
+-      *height        = sdl->new_height;
++      *width         = sdl->new_height;
++      *height        = sdl->new_width;
+       *resize        = true;
+       sdl->resized   = false;
+    }
+@@ -359,7 +362,8 @@ static bool sdl_ctx_has_focus(void *data)
+ #ifdef HAVE_SDL2
+    gfx_ctx_sdl_data_t *sdl = (gfx_ctx_sdl_data_t*)data;
+    flags = (SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS);
+-   return (SDL_GetWindowFlags(sdl->win) & flags) == flags;
++   //return (SDL_GetWindowFlags(sdl->win) & flags) == flags;
++   return true;
+ #else
+    flags = (SDL_APPINPUTFOCUS | SDL_APPACTIVE);
+    return (SDL_GetAppState() & flags) == flags;
+diff --git a/gfx/drivers_font/gl_core_raster_font.c b/gfx/drivers_font/gl_core_raster_font.c
+index f9a2156f61..31da896bef 100644
+--- a/gfx/drivers_font/gl_core_raster_font.c
++++ b/gfx/drivers_font/gl_core_raster_font.c
+@@ -182,7 +182,7 @@ static void gl_core_raster_font_draw_vertices(gl_core_raster_t *font,
+    if (  font->gl &&
+          font->gl->pipelines.font_loc.flat_ubo_vertex >= 0)
+       glUniform4fv(font->gl->pipelines.font_loc.flat_ubo_vertex,
+-                   4, font->gl->mvp_no_rot.data);
++                   4, font->gl->mvp_screen_rot.data);
+ 
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+diff --git a/gfx/drivers_font/gl_raster_font.c b/gfx/drivers_font/gl_raster_font.c
+index 84072e5bcf..da5e81bc48 100644
+--- a/gfx/drivers_font/gl_raster_font.c
++++ b/gfx/drivers_font/gl_raster_font.c
+@@ -273,7 +273,7 @@ static void gl_raster_font_draw_vertices(gl_raster_t *font,
+    {
+       font->gl->shader->set_coords(font->gl->shader_data, coords);
+       font->gl->shader->set_mvp(font->gl->shader_data,
+-            &font->gl->mvp_no_rot);
++            &font->gl->mvp_screen_rot);
+    }
+ 
+    glDrawArrays(GL_TRIANGLES, 0, coords->vertices);
+diff --git a/input/drivers_joypad/sdl_joypad.c b/input/drivers_joypad/sdl_joypad.c
+index 65b3410843..418b182840 100644
+--- a/input/drivers_joypad/sdl_joypad.c
++++ b/input/drivers_joypad/sdl_joypad.c
+@@ -140,6 +140,8 @@ static void sdl_pad_connect(unsigned id)
+ #endif
+ #endif
+ 
++   RARCH_LOG("[SDL]: Autoconfigure device %s:%d:%d:%d\n", sdl_joypad_name(id), id, vendor, product);
++
+    input_autoconfigure_connect(
+          sdl_joypad_name(id),
+          NULL,
+@@ -266,6 +268,9 @@ static bool sdl_joypad_init(void *data)
+       return false;
+ 
+ #if HAVE_SDL2
++   SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
++   SDL_SetHint("SDL_JOYSTICK_CALIBRATION_FILE", "/mnt/extsd/calibration.dat");
++
+    g_has_haptic = false;
+    if (SDL_InitSubSystem(SDL_INIT_HAPTIC) < 0)
+       RARCH_WARN("[SDL]: Failed to initialize haptic device support: %s\n",
+diff --git a/input/input_keymaps.c b/input/input_keymaps.c
+index bbf25e0566..b77f56ee7b 100644
+--- a/input/input_keymaps.c
++++ b/input/input_keymaps.c
+@@ -294,6 +294,10 @@ const struct input_key_map input_config_key_map[] = {
+    { "clear", RETROK_CLEAR },
+    { "oem102", RETROK_OEM_102 },
+ 
++   { "lbrace", RETROK_LEFTBRACE },
++   { "rbrace", RETROK_RIGHTBRACE },
++   { "select", RETROK_SELECT },
++
+    { "nul", RETROK_UNKNOWN },
+    { NULL, RETROK_UNKNOWN },
+ };
+@@ -733,6 +737,16 @@ const struct rarch_key_map rarch_key_map_sdl[] = {
+ #endif
+    { SDLK_UNDO, RETROK_UNDO },
+ 
++   // For PocketGo S30
++   { SDLK_KP_LEFTBRACE, RETROK_LEFTBRACE }, //  L1
++   { SDLK_KP_RIGHTBRACE, RETROK_RIGHTBRACE }, // R1
++   { SDLK_KP_LEFTPAREN, RETROK_LEFTPAREN }, // L2
++   { SDLK_KP_RIGHTPAREN, RETROK_RIGHTPAREN }, // R2
++   { SDLK_SELECT, RETROK_SELECT }, // Select
++   //{ SDLK_POWER, RETROK_ESCAPE}, // Power
++   //{ SDLK_VOLUMEUP, RETROK_KP_PLUS }, //  Volume up
++   //{ SDLK_VOLUMEDOWN, RETROK_KP_MINUS }, // Volume down
++
+    { 0, RETROK_UNKNOWN },
+ };
+ #endif
+diff --git a/intl/msg_hash_lbl.h b/intl/msg_hash_lbl.h
+index d3ba039514..c5ca45b592 100644
+--- a/intl/msg_hash_lbl.h
++++ b/intl/msg_hash_lbl.h
+@@ -2976,6 +2976,10 @@ MSG_HASH(
+    MENU_ENUM_LABEL_VIDEO_FORCE_SRGB_DISABLE,
+    "video_force_srgb_disable"
+    )
++MSG_HASH(
++   MENU_ENUM_LABEL_VIDEO_BRIGHTNESS,
++   "video_brightness"
++   )
+ MSG_HASH(
+    MENU_ENUM_LABEL_VIDEO_FRAME_DELAY,
+    "video_frame_delay"
+diff --git a/intl/msg_hash_us.c b/intl/msg_hash_us.c
+index 4aba897a6f..6b08ef756f 100644
+--- a/intl/msg_hash_us.c
++++ b/intl/msg_hash_us.c
+@@ -537,6 +537,10 @@ int msg_hash_get_help_us_enum(enum msg_hash_enums msg, char *s, size_t len)
+                              "OpenGL drivers on Windows have video problems \n"
+                              "with sRGB FBO support enabled.");
+             break;
++        case MENU_ENUM_LABEL_VIDEO_BRIGHTNESS:
++            snprintf(s, len,
++                     "Change the brightness of your screen.");
++            break;
+         case MENU_ENUM_LABEL_AUDIO_ENABLE:
+             snprintf(s, len,
+                      "Enable audio output.");
+diff --git a/intl/msg_hash_us.h b/intl/msg_hash_us.h
+index 71aae2ecab..6ffc6b9ac1 100644
+--- a/intl/msg_hash_us.h
++++ b/intl/msg_hash_us.h
+@@ -1466,6 +1466,14 @@ MSG_HASH(
+    MENU_ENUM_SUBLABEL_VIDEO_FORCE_SRGB_DISABLE,
+    "Forcibly disable sRGB FBO support. Some Intel OpenGL drivers on Windows have video problems with sRGB FBO support if this is enabled. Enabling this can work around it."
+    )
++MSG_HASH(
++   MENU_ENUM_LABEL_VALUE_VIDEO_BRIGHTNESS,
++   "Screen brightness"
++   )
++MSG_HASH(
++   MENU_ENUM_SUBLABEL_VIDEO_BRIGHTNESS,
++   "Increase or decrease the screen brightness"
++   )
+ 
+ /* Settings > Video > Fullscreen Mode */
+ 
+diff --git a/libretro-common/include/libretro.h b/libretro-common/include/libretro.h
+index 1ae508fc93..c775a7f803 100644
+--- a/libretro-common/include/libretro.h
++++ b/libretro-common/include/libretro.h
+@@ -463,6 +463,9 @@ enum retro_key
+    RETROK_UNDO           = 322,
+    RETROK_OEM_102        = 323,
+ 
++   // PocketGo S30 Additions
++   RETROK_SELECT         = 324,
++
+    RETROK_LAST,
+ 
+    RETROK_DUMMY          = INT_MAX /* Ensure sizeof(enum) == sizeof(int) */
+diff --git a/menu/cbs/menu_cbs_sublabel.c b/menu/cbs/menu_cbs_sublabel.c
+index ea433d43c5..c646dac0bd 100644
+--- a/menu/cbs/menu_cbs_sublabel.c
++++ b/menu/cbs/menu_cbs_sublabel.c
+@@ -412,6 +412,7 @@ DEFAULT_SUBLABEL_MACRO(action_bind_sublabel_video_gpu_screenshot,          MENU_
+ DEFAULT_SUBLABEL_MACRO(action_bind_sublabel_video_rotation,                MENU_ENUM_SUBLABEL_VIDEO_ROTATION)
+ DEFAULT_SUBLABEL_MACRO(action_bind_sublabel_screen_orientation,            MENU_ENUM_SUBLABEL_SCREEN_ORIENTATION)
+ DEFAULT_SUBLABEL_MACRO(action_bind_sublabel_video_force_srgb_enable,       MENU_ENUM_SUBLABEL_VIDEO_FORCE_SRGB_DISABLE)
++DEFAULT_SUBLABEL_MACRO(action_bind_sublabel_video_brightness,              MENU_ENUM_SUBLABEL_VIDEO_BRIGHTNESS)
+ DEFAULT_SUBLABEL_MACRO(action_bind_sublabel_video_fullscreen,              MENU_ENUM_SUBLABEL_VIDEO_FULLSCREEN)
+ DEFAULT_SUBLABEL_MACRO(action_bind_sublabel_video_windowed_fullscreen,     MENU_ENUM_SUBLABEL_VIDEO_WINDOWED_FULLSCREEN)
+ DEFAULT_SUBLABEL_MACRO(action_bind_sublabel_video_gpu_record,              MENU_ENUM_SUBLABEL_VIDEO_GPU_RECORD)
+@@ -2963,6 +2964,9 @@ int menu_cbs_init_bind_sublabel(menu_file_list_cbs_t *cbs,
+          case MENU_ENUM_LABEL_VIDEO_FORCE_SRGB_DISABLE:
+             BIND_ACTION_SUBLABEL(cbs, action_bind_sublabel_video_force_srgb_enable);
+             break;
++         case MENU_ENUM_LABEL_VIDEO_BRIGHTNESS:
++            BIND_ACTION_SUBLABEL(cbs, action_bind_sublabel_video_brightness);
++            break;
+          case MENU_ENUM_LABEL_VIDEO_ROTATION:
+             BIND_ACTION_SUBLABEL(cbs, action_bind_sublabel_video_rotation);
+             break;
+diff --git a/menu/menu_displaylist.c b/menu/menu_displaylist.c
+index a587265e6e..c018a1d8a9 100644
+--- a/menu/menu_displaylist.c
++++ b/menu/menu_displaylist.c
+@@ -7283,6 +7283,10 @@ unsigned menu_displaylist_build_list(
+                      MENU_ENUM_LABEL_VIDEO_FORCE_SRGB_DISABLE,
+                      PARSE_ONLY_BOOL, false) == 0)
+                count++;
++            if (MENU_DISPLAYLIST_PARSE_SETTINGS_ENUM(list,
++                     MENU_ENUM_LABEL_VIDEO_BRIGHTNESS,
++                     PARSE_ONLY_UINT, false) == 0)
++               count++;
+          }
+          break;
+       case DISPLAYLIST_VIDEO_SYNCHRONIZATION_SETTINGS_LIST:
+diff --git a/menu/menu_setting.c b/menu/menu_setting.c
+index c505bf6e2b..a0d06c895f 100644
+--- a/menu/menu_setting.c
++++ b/menu/menu_setting.c
+@@ -10135,6 +10135,30 @@ static bool setting_append_list(
+                MENU_SETTINGS_LIST_CURRENT_ADD_CMD(list, list_info, CMD_EVENT_REINIT);
+             }
+ 
++            CONFIG_UINT(
++                  list, list_info,
++                  &settings->uints.video_brightness,
++                  MENU_ENUM_LABEL_VIDEO_BRIGHTNESS,
++                  MENU_ENUM_LABEL_VALUE_VIDEO_BRIGHTNESS,
++                  DEFAULT_BRIGHTNESS,
++                  &group_info,
++                  &subgroup_info,
++                  parent_group,
++                  general_write_handler,
++                  general_read_handler);
++            MENU_SETTINGS_LIST_CURRENT_ADD_CMD(
++                  list,
++                  list_info,
++                  CMD_EVENT_VIDEO_SET_BRIGHTNESS);
++            menu_settings_list_current_add_range(
++                  list,
++                  list_info,
++                  0,
++                  100,
++                  5,
++                  true,
++                  true);
++
+             END_SUB_GROUP(list, list_info, parent_group);
+             START_SUB_GROUP(list, list_info, "Aspect", &group_info, &subgroup_info, parent_group);
+             CONFIG_UINT(
+diff --git a/msg_hash.h b/msg_hash.h
+index 45088b146f..65e6e4135f 100644
+--- a/msg_hash.h
++++ b/msg_hash.h
+@@ -973,6 +973,7 @@ enum msg_hash_enums
+    MENU_LABEL(VIDEO_FULLSCREEN_X),
+    MENU_LABEL(VIDEO_FULLSCREEN_Y),
+    MENU_LABEL(VIDEO_FORCE_SRGB_DISABLE),
++   MENU_LABEL(VIDEO_BRIGHTNESS),
+    MENU_LABEL(VIDEO_ROTATION),
+    MENU_LABEL(SCREEN_ORIENTATION),
+    MENU_LABEL(VIDEO_SCALE),
+diff --git a/retroarch.c b/retroarch.c
+index 6a88c3108e..6f2821848a 100644
+--- a/retroarch.c
++++ b/retroarch.c
+@@ -2230,6 +2230,8 @@ struct rarch_state
+    float video_driver_core_hz;
+    float video_driver_aspect_ratio;
+ 
++   unsigned video_driver_brightness;
++
+ #ifdef HAVE_AUDIOMIXER
+    float audio_driver_mixer_volume_gain;
+ #endif
+@@ -16345,6 +16350,9 @@ bool command_event(enum event_command cmd, void *data)
+                      adaptive_vsync, swap_interval);
+          }
+          break;
++      case CMD_EVENT_VIDEO_SET_BRIGHTNESS:
++         video_driver_set_brightness();
++         break;
+       case CMD_EVENT_VIDEO_SET_ASPECT_RATIO:
+          video_driver_set_aspect_ratio();
+          break;
+@@ -32193,6 +32201,31 @@ void video_driver_monitor_reset(void)
+    p_rarch->video_driver_frame_time_count = 0;
+ }
+ 
++static int volume_lerp(int min, int max, float perc) {
++   return min + (max - min) * perc;
++}
++
++void video_driver_set_brightness(void)
++{
++   struct rarch_state *p_rarch = &rarch_st;
++   settings_t  *settings       = p_rarch->configuration_settings;
++   unsigned  brightness  = settings->uints.video_brightness;
++
++   FILE* f = fopen("/sys/class/disp/disp/attr/lcdbl", "w");
++
++   if(f == NULL)
++      return;
++
++   float percent = pow((float)brightness/100, 2);
++
++   // 5 seems to be the lowest value that makes the screen still visible
++   int value = volume_lerp(5, 255, percent);
++
++   // Write the brightness value to the device
++   fprintf(f, "%d", value);
++   fclose(f);
++}
++
+ void video_driver_set_aspect_ratio(void)
+ {
+    struct rarch_state *p_rarch = &rarch_st;
+@@ -35224,6 +35224,7 @@ bool retroarch_main_init(int argc, char *argv[])
+    input_driver_deinit_command(p_rarch);
+    input_driver_init_command(p_rarch);
+ #endif
++   command_event(CMD_EVENT_VIDEO_SET_BRIGHTNESS, NULL);
+ #ifdef HAVE_NETWORKGAMEPAD
+    if (p_rarch->input_driver_remote)
+       input_remote_free(p_rarch->input_driver_remote,
+diff --git a/retroarch.h b/retroarch.h
+index 36a81d48a8..036e71fa2f 100644
+--- a/retroarch.h
++++ b/retroarch.h
+@@ -1550,6 +1550,8 @@ bool video_driver_get_prev_video_out(void);
+ 
+ void video_driver_monitor_reset(void);
+ 
++void video_driver_set_brightness(void);
++
+ void video_driver_set_aspect_ratio(void);
+ 
+ void video_driver_update_viewport(struct video_viewport* vp, bool force_full, bool keep_aspect);
+diff --git a/gfx/common/gl_common.h b/gfx/common/gl_common.h
+index 69c9eb2491..2d69fc032b 100644
+--- a/gfx/common/gl_common.h
++++ b/gfx/common/gl_common.h
+@@ -218,7 +218,7 @@ struct gl
+ 
+    struct scaler_ctx pbo_readback_scaler;
+    struct video_viewport vp;                          /* int alignment */
+-   math_matrix_4x4 mvp, mvp_no_rot;
++   math_matrix_4x4 mvp, mvp_no_rot, mvp_screen_rot;
+    struct video_coords coords;                        /* ptr alignment */
+    struct scaler_ctx scaler;
+    video_info_t video_info;
+diff --git a/gfx/drivers_display/gfx_display_gl.c b/gfx/drivers_display/gfx_display_gl.c
+index cde1e19587..411e5a7872 100644
+--- a/gfx/drivers_display/gfx_display_gl.c
++++ b/gfx/drivers_display/gfx_display_gl.c
+@@ -99,7 +99,7 @@ static void *gfx_display_gl_get_default_mvp(void *data)
+    if (!gl)
+       return NULL;
+ 
+-   return &gl->mvp_no_rot;
++   return &gl->mvp_screen_rot;
+ }
+ 
+ static GLenum gfx_display_prim_to_gl_enum(
+@@ -236,13 +236,14 @@ static void gfx_display_gl_draw(gfx_display_ctx_draw_t *draw,
+    if (!draw->coords->lut_tex_coord)
+       draw->coords->lut_tex_coord = &gl_tex_coords[0];
+ 
+-   glViewport(draw->x, draw->y, draw->width, draw->height);
++   draw->y = video_height - draw->height - draw->y;
++   glViewport(draw->y, draw->x, draw->height, draw->width);
+    glBindTexture(GL_TEXTURE_2D, (GLuint)draw->texture);
+ 
+    gl->shader->set_coords(gl->shader_data, draw->coords);
+    gl->shader->set_mvp(gl->shader_data,
+          draw->matrix_data ? (math_matrix_4x4*)draw->matrix_data
+-      : (math_matrix_4x4*)&gl->mvp_no_rot);
++      : (math_matrix_4x4*)&gl->mvp_screen_rot);
+ 
+ 
+    glDrawArrays(gfx_display_prim_to_gl_enum(
+@@ -352,7 +353,7 @@ static void gfx_display_gl_scissor_begin(
+       int x, int y,
+       unsigned width, unsigned height)
+ {
+-   glScissor(x, video_height - y - height, width, height);
++   glScissor(video_height - y - height, x, height, width);
+    glEnable(GL_SCISSOR_TEST);
+ #ifdef MALI_BUG
+    /* TODO/FIXME: If video width/height changes between
+diff --git a/gfx/drivers/gl.c b/gfx/drivers/gl.c
+index 4688e203b7..6aafaa3520 100644
+--- a/gfx/drivers/gl.c
++++ b/gfx/drivers/gl.c
+@@ -370,20 +370,23 @@ static bool gl2_recreate_fbo(
+ static void gl2_set_projection(gl_t *gl,
+       struct video_ortho *ortho, bool allow_rotate)
+ {
+-   math_matrix_4x4 rot;
+-
+    /* Calculate projection. */
+    matrix_4x4_ortho(gl->mvp_no_rot, ortho->left, ortho->right,
+          ortho->bottom, ortho->top, ortho->znear, ortho->zfar);
+ 
++   math_matrix_4x4 scrn_rot;
++   matrix_4x4_rotate_z(scrn_rot, M_PI * 90 / 180.0f);
++   matrix_4x4_multiply(gl->mvp_screen_rot, scrn_rot, gl->mvp_no_rot);
++
+    if (!allow_rotate)
+    {
+-      gl->mvp = gl->mvp_no_rot;
++      gl->mvp = gl->mvp_screen_rot;
+       return;
+    }
+ 
++   math_matrix_4x4 rot;
+    matrix_4x4_rotate_z(rot, M_PI * gl->rotation / 180.0f);
+-   matrix_4x4_multiply(gl->mvp, rot, gl->mvp_no_rot);
++   matrix_4x4_multiply(gl->mvp, rot, gl->mvp_screen_rot);
+ }
+ 
+ static void gl2_set_viewport(gl_t *gl,
+@@ -467,7 +470,7 @@ static void gl2_set_viewport(gl_t *gl,
+       gl->vp.y *= 2;
+ #endif
+ 
+-   glViewport(gl->vp.x, gl->vp.y, gl->vp.width, gl->vp.height);
++   glViewport(gl->vp.y, gl->vp.x, gl->vp.height, gl->vp.width);
+    gl2_set_projection(gl, &default_ortho, allow_rotate);
+ 
+    /* Set last backbuffer viewport. */
+@@ -1881,7 +1884,7 @@ static void gl2_render_overlay(gl_t *gl)
+    glEnable(GL_BLEND);
+ 
+    if (gl->overlay_full_screen)
+-      glViewport(0, 0, width, height);
++      glViewport(0, 0, height, width);
+ 
+    /* Ensure that we reset the attrib array. */
+    gl->shader->use(gl, gl->shader_data,
+@@ -1893,7 +1896,7 @@ static void gl2_render_overlay(gl_t *gl)
+    gl->coords.vertices  = 4 * gl->overlays;
+ 
+    gl->shader->set_coords(gl->shader_data, &gl->coords);
+-   gl->shader->set_mvp(gl->shader_data, &gl->mvp_no_rot);
++   gl->shader->set_mvp(gl->shader_data, &gl->mvp_screen_rot);
+ 
+    for (i = 0; i < gl->overlays; i++)
+    {
+@@ -1907,7 +1910,7 @@ static void gl2_render_overlay(gl_t *gl)
+    gl->coords.color     = gl->white_color_ptr;
+    gl->coords.vertices  = 4;
+    if (gl->overlay_full_screen)
+-      glViewport(gl->vp.x, gl->vp.y, gl->vp.width, gl->vp.height);
++      glViewport(gl->vp.y, gl->vp.x, gl->vp.height, gl->vp.width);
+ }
+ #endif
+ 
+@@ -2364,7 +2367,7 @@ static void gl2_render_osd_background(gl_t *gl, const char *msg)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendEquation(GL_FUNC_ADD);
+ 
+-   gl->shader->set_mvp(gl->shader_data, &gl->mvp_no_rot);
++   gl->shader->set_mvp(gl->shader_data, &gl->mvp_screen_rot);
+ 
+    uniform_param.type              = UNIFORM_4F;
+    uniform_param.enabled           = true;
+@@ -2458,15 +2461,15 @@ static INLINE void gl2_draw_texture(gl_t *gl)
+    gl->coords.vertices    = 4;
+ 
+    gl->shader->set_coords(gl->shader_data, &gl->coords);
+-   gl->shader->set_mvp(gl->shader_data, &gl->mvp_no_rot);
++   gl->shader->set_mvp(gl->shader_data, &gl->mvp_screen_rot);
+ 
+    glEnable(GL_BLEND);
+ 
+    if (gl->menu_texture_full_screen)
+    {
+-      glViewport(0, 0, width, height);
++      glViewport(0, 0, height, width);
+       glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+-      glViewport(gl->vp.x, gl->vp.y, gl->vp.width, gl->vp.height);
++      glViewport(gl->vp.y, gl->vp.x, gl->vp.height, gl->vp.width);
+    }
+    else
+       glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+@@ -2579,8 +2582,8 @@ static void gl2_video_layout_viewport(gl_t *gl)
+       bounds = video_layout_screen(0);
+ 
+       glViewport(
+-         bounds->x, gl->video_height - bounds->y - bounds->h,
+-         bounds->w, bounds->h
++         gl->video_height - bounds->y - bounds->h, bounds->x,
++         bounds->h, bounds->w
+       );
+    }
+ }
+@@ -2592,7 +2595,7 @@ static void gl2_video_layout_render(gl_t *gl)
+    if (!video_layout_valid())
+       return;
+ 
+-   glViewport(0, 0, gl->video_width, gl->video_height);
++   glViewport(0, 0, gl->video_height, gl->video_width);
+    glEnable(GL_BLEND);
+ 
+    for (i = 0; i < video_layout_layer_count(); ++i)
+@@ -2706,7 +2709,7 @@ static void gl2_video_layout_image(
+    gl->coords.vertices  = 4;
+ 
+    gl->shader->set_coords(gl->shader_data, &gl->coords);
+-   gl->shader->set_mvp(gl->shader_data, &gl->mvp_no_rot);
++   gl->shader->set_mvp(gl->shader_data, &gl->mvp_screen_rot);
+ 
+    glBindTexture(GL_TEXTURE_2D, (GLuint)(uintptr_t)image_handle);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+@@ -2776,7 +2779,7 @@ static void gl2_video_layout_layer_end(const video_layout_render_info_t *info, v
+    gl->coords.vertices = 4;
+ 
+    gl->shader->set_coords(gl->shader_data, &gl->coords);
+-   gl->shader->set_mvp(gl->shader_data, &gl->mvp_no_rot);
++   gl->shader->set_mvp(gl->shader_data, &gl->mvp_screen_rot);
+ 
+    glBindTexture(GL_TEXTURE_2D, gl->video_layout_fbo_texture);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+diff --git a/retroarch_data.h b/retroarch_data.h
+index 73b45ca730..06956de0af 100644
+--- a/retroarch_data.h
++++ b/retroarch_data.h
+@@ -2504,6 +2504,8 @@ struct key_desc key_descriptors[RARCH_MAX_KEYS] =
+    {RETROK_QUOTE,         "\'"},
+    {RETROK_LEFTPAREN,     "("},
+    {RETROK_RIGHTPAREN,    ")"},
++   {RETROK_LEFTBRACE,     "{"},
++   {RETROK_RIGHTBRACE,    "}"},
+    {RETROK_ASTERISK,      "*"},
+    {RETROK_PLUS,          "+"},
+    {RETROK_COMMA,         ","},
+@@ -2620,6 +2622,7 @@ struct key_desc key_descriptors[RARCH_MAX_KEYS] =
+    {RETROK_LSUPER,        "Left Super"},
+    {RETROK_MODE,          "Mode"},
+    {RETROK_COMPOSE,       "Compose"},
++   {RETROK_SELECT,        "Select"},
+ 
+    {RETROK_HELP,          "Help"},
+    {RETROK_PRINT,         "Print"},

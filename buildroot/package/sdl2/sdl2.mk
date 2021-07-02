@@ -25,12 +25,13 @@ SDL2_CONF_OPTS += --enable-static
 # Enable PocketgoS30/Pandora driver
 SDL2_CONF_OPTS += --enable-video-pandora
 
-ifeq ($(BR2_PACKAGE_HAS_UDEV),y)
-SDL2_DEPENDENCIES += udev
-SDL2_CONF_OPTS += --enable-libudev
-else
+# FIXME: Workaround to fix S30 compilation
+#ifeq ($(BR2_PACKAGE_HAS_UDEV),y)
+#SDL2_DEPENDENCIES += udev
+#SDL2_CONF_OPTS += --enable-libudev
+#else
 SDL2_CONF_OPTS += --disable-libudev
-endif
+#endif
 
 ifeq ($(BR2_PACKAGE_SDL2_DIRECTFB),y)
 SDL2_DEPENDENCIES += directfb
@@ -58,7 +59,8 @@ SDL2_CONF_OPTS += --enable-video-x11 \
 	--with-x=$(STAGING_DIR) \
 	--x-includes=$(STAGING_DIR)/usr/include \
 	--x-libraries=$(STAGING_DIR)/usr/lib \
-	--enable-video-x11-xshape
+	--enable-video-x11-xshape \
+ 	LDLAGS=" -lEGL"
 
 ifeq ($(BR2_PACKAGE_XLIB_LIBXCURSOR),y)
 SDL2_DEPENDENCIES += xlib_libXcursor
@@ -115,10 +117,10 @@ SDL2_CONF_OPTS += --disable-video-opengl
 endif
 
 ifeq ($(BR2_PACKAGE_SDL2_OPENGLES),y)
-SDL2_CONF_OPTS += --enable-video-opengles
+SDL2_CONF_OPTS += --enable-video-opengles2
 SDL2_DEPENDENCIES += libgles
 else
-SDL2_CONF_OPTS += --disable-video-opengles
+SDL2_CONF_OPTS += --disable-video-opengles2 --disable-video-opengles
 endif
 
 ifeq ($(BR2_PACKAGE_TSLIB),y)
