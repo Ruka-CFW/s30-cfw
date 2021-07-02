@@ -1,0 +1,2164 @@
+--- a/src/events/scancodes_pocketgos30.h	1969-12-31 19:00:00.000000000 -0500
++++ b/src/events/scancodes_pocketgos30.h	2021-05-18 10:28:12.799262342 -0400
+@@ -0,0 +1,159 @@
++/*
++  Simple DirectMedia Layer
++  Copyright (C) 1997-2020 Sam Lantinga <slouken@libsdl.org>
++
++  This software is provided 'as-is', without any express or implied
++  warranty.  In no event will the authors be held liable for any damages
++  arising from the use of this software.
++
++  Permission is granted to anyone to use this software for any purpose,
++  including commercial applications, and to alter it and redistribute it
++  freely, subject to the following restrictions:
++
++  1. The origin of this software must not be misrepresented; you must not
++     claim that you wrote the original software. If you use this software
++     in a product, an acknowledgment in the product documentation would be
++     appreciated but is not required.
++  2. Altered source versions must be plainly marked as such, and must not be
++     misrepresented as being the original software.
++  3. This notice may not be removed or altered from any source distribution.
++*/
++
++/* Mac virtual key code to SDL scancode mapping table
++   Sources:
++   - Inside Macintosh: Text <http://developer.apple.com/documentation/mac/Text/Text-571.html>
++   - Apple USB keyboard driver source <http://darwinsource.opendarwin.org/10.4.6.ppc/IOHIDFamily-172.8/IOHIDFamily/Cosmo_USB2ADB.c>
++   - experimentation on various ADB and USB ISO keyboards and one ADB ANSI keyboard
++*/
++/* *INDENT-OFF* */
++static const SDL_Scancode pocketgo30_scancode_table[] = {
++    /*   0 */   SDL_SCANCODE_UNKNOWN,
++    /*   1 */   SDL_SCANCODE_UNKNOWN,
++    /*   2 */   SDL_SCANCODE_UNKNOWN,
++    /*   3 */   SDL_SCANCODE_UNKNOWN,
++    /*   4 */   SDL_SCANCODE_UNKNOWN,
++    /*   5 */   SDL_SCANCODE_UNKNOWN,
++    /*   6 */   SDL_SCANCODE_UNKNOWN,
++    /*   7 */   SDL_SCANCODE_UNKNOWN,
++    /*   8 */   SDL_SCANCODE_UNKNOWN,
++    /*   9 */   SDL_SCANCODE_UNKNOWN,
++    /*  10 */   SDL_SCANCODE_UNKNOWN,
++    /*  11 */   SDL_SCANCODE_UNKNOWN,
++    /*  12 */   SDL_SCANCODE_UNKNOWN,
++    /*  13 */   SDL_SCANCODE_UNKNOWN,
++    /*  14 */   SDL_SCANCODE_UNKNOWN,
++    /*  15 */   SDL_SCANCODE_UNKNOWN,
++    /*  16 */   SDL_SCANCODE_UNKNOWN,
++    /*  17 */   SDL_SCANCODE_UNKNOWN,
++    /*  18 */   SDL_SCANCODE_UNKNOWN,
++    /*  19 */   SDL_SCANCODE_UNKNOWN,
++    /*  20 */   SDL_SCANCODE_UNKNOWN,
++    /*  21 */   SDL_SCANCODE_UNKNOWN,
++    /*  22 */   SDL_SCANCODE_UNKNOWN,
++    /*  23 */   SDL_SCANCODE_UNKNOWN,
++    /*  24 */   SDL_SCANCODE_UNKNOWN,
++    /*  25 */   SDL_SCANCODE_UNKNOWN,
++    /*  26 */   SDL_SCANCODE_UNKNOWN,
++    /*  27 */   SDL_SCANCODE_UNKNOWN,
++    /*  28 */   SDL_SCANCODE_UNKNOWN,
++    /*  29 */   SDL_SCANCODE_UNKNOWN,
++    /*  30 */   SDL_SCANCODE_UNKNOWN,
++    /*  31 */   SDL_SCANCODE_UNKNOWN,
++    /*  32 */   SDL_SCANCODE_UNKNOWN,
++    /*  33 */   SDL_SCANCODE_UNKNOWN,
++    /*  34 */   SDL_SCANCODE_UNKNOWN,
++    /*  35 */   SDL_SCANCODE_UNKNOWN,
++    /*  36 */   SDL_SCANCODE_UNKNOWN,
++    /*  37 */   SDL_SCANCODE_UNKNOWN,
++    /*  38 */   SDL_SCANCODE_UNKNOWN,
++    /*  39 */   SDL_SCANCODE_UNKNOWN,
++    /*  40 */   SDL_SCANCODE_UNKNOWN,
++    /*  41 */   SDL_SCANCODE_UNKNOWN,
++    /*  42 */   SDL_SCANCODE_UNKNOWN,
++    /*  43 */   SDL_SCANCODE_UNKNOWN,
++    /*  44 */   SDL_SCANCODE_UNKNOWN,
++    /*  45 */   SDL_SCANCODE_UNKNOWN,
++    /*  46 */   SDL_SCANCODE_UNKNOWN,
++    /*  47 */   SDL_SCANCODE_UNKNOWN,
++    /*  48 */   SDL_SCANCODE_UNKNOWN,
++    /*  49 */   SDL_SCANCODE_UNKNOWN,
++    /*  50 */   SDL_SCANCODE_UNKNOWN,
++    /*  51 */   SDL_SCANCODE_UNKNOWN,
++    /*  52 */   SDL_SCANCODE_UNKNOWN,
++    /*  53 */   SDL_SCANCODE_UNKNOWN,
++    /*  54 */   SDL_SCANCODE_UNKNOWN,
++    /*  55 */   SDL_SCANCODE_UNKNOWN,
++    /*  56 */   SDL_SCANCODE_UNKNOWN,
++    /*  57 */   SDL_SCANCODE_UNKNOWN,
++    /*  58 */   SDL_SCANCODE_UP,
++    /*  59 */   SDL_SCANCODE_DOWN,
++    /*  60 */   SDL_SCANCODE_LEFT,
++    /*  61 */   SDL_SCANCODE_RIGHT,
++    /*  62 */   SDL_SCANCODE_B,
++    /*  63 */   SDL_SCANCODE_Y,
++    /*  64 */   SDL_SCANCODE_A,
++    /*  65 */   SDL_SCANCODE_X,
++    /*  66 */   SDL_SCANCODE_SELECT,
++    /*  67 */   SDL_SCANCODE_RETURN,
++    /*  68 */   SDL_SCANCODE_UNKNOWN,
++    /*  69 */   SDL_SCANCODE_KP_PLUS,
++    /*  70 */   SDL_SCANCODE_KP_MINUS,
++    /*  71 */   SDL_SCANCODE_KP_LEFTPAREN,
++    /*  72 */   SDL_SCANCODE_KP_RIGHTBRACE,
++    /*  73 */   SDL_SCANCODE_KP_LEFTBRACE,
++    /*  74 */   SDL_SCANCODE_KP_RIGHTPAREN,
++    /*  75 */   SDL_SCANCODE_UNKNOWN,
++    /*  76 */   SDL_SCANCODE_UNKNOWN,
++    /*  77 */   SDL_SCANCODE_UNKNOWN,
++    /*  78 */   SDL_SCANCODE_UNKNOWN,
++    /*  79 */   SDL_SCANCODE_UNKNOWN,
++    /*  80 */   SDL_SCANCODE_UNKNOWN,
++    /*  81 */   SDL_SCANCODE_UNKNOWN,
++    /*  82 */   SDL_SCANCODE_UNKNOWN,
++    /*  83 */   SDL_SCANCODE_UNKNOWN,
++    /*  84 */   SDL_SCANCODE_UNKNOWN,
++    /*  85 */   SDL_SCANCODE_UNKNOWN,
++    /*  86 */   SDL_SCANCODE_UNKNOWN,
++    /*  87 */   SDL_SCANCODE_UNKNOWN,
++    /*  88 */   SDL_SCANCODE_UNKNOWN,
++    /*  89 */   SDL_SCANCODE_UNKNOWN,
++    /*  90 */   SDL_SCANCODE_UNKNOWN,
++    /*  91 */   SDL_SCANCODE_UNKNOWN,
++    /*  92 */   SDL_SCANCODE_UNKNOWN,
++    /*  93 */   SDL_SCANCODE_UNKNOWN,
++    /*  94 */   SDL_SCANCODE_UNKNOWN,
++    /*  95 */   SDL_SCANCODE_UNKNOWN,
++    /*  96 */   SDL_SCANCODE_UNKNOWN,
++    /*  97 */   SDL_SCANCODE_UNKNOWN,
++    /*  98 */   SDL_SCANCODE_UNKNOWN,
++    /*  99 */   SDL_SCANCODE_UNKNOWN,
++    /* 100 */   SDL_SCANCODE_UNKNOWN,
++    /* 101 */   SDL_SCANCODE_UNKNOWN,
++    /* 102 */   SDL_SCANCODE_UNKNOWN,
++    /* 103 */   SDL_SCANCODE_UNKNOWN,
++    /* 104 */   SDL_SCANCODE_UNKNOWN,
++    /* 105 */   SDL_SCANCODE_UNKNOWN,
++    /* 106 */   SDL_SCANCODE_UNKNOWN,
++    /* 107 */   SDL_SCANCODE_UNKNOWN,
++    /* 108 */   SDL_SCANCODE_UNKNOWN,
++    /* 109 */   SDL_SCANCODE_UNKNOWN,
++    /* 110 */   SDL_SCANCODE_UNKNOWN,
++    /* 111 */   SDL_SCANCODE_UNKNOWN,
++    /* 112 */   SDL_SCANCODE_UNKNOWN,
++    /* 113 */   SDL_SCANCODE_UNKNOWN,
++    /* 114 */   SDL_SCANCODE_UNKNOWN,
++    /* 115 */   SDL_SCANCODE_UNKNOWN,
++    /* 116 */   SDL_SCANCODE_POWER,
++    /* 117 */   SDL_SCANCODE_UNKNOWN,
++    /* 118 */   SDL_SCANCODE_UNKNOWN,
++    /* 119 */   SDL_SCANCODE_UNKNOWN,
++    /* 120 */   SDL_SCANCODE_UNKNOWN,
++    /* 121 */   SDL_SCANCODE_UNKNOWN,
++    /* 122 */   SDL_SCANCODE_UNKNOWN,
++    /* 123 */   SDL_SCANCODE_UNKNOWN,
++    /* 124 */   SDL_SCANCODE_UNKNOWN,
++    /* 125 */   SDL_SCANCODE_UNKNOWN,
++    /* 126 */   SDL_SCANCODE_UNKNOWN,
++    /* 127 */   SDL_SCANCODE_UNKNOWN
++};
++/* *INDENT-ON* */
+--- a/src/render/SDL_render.c	2020-12-21 12:44:36.000000000 -0500
++++ b/src/render/SDL_render.c	2021-05-28 15:57:12.329239488 -0400
+@@ -2136,6 +2136,13 @@
+             return -1;
+         }
+     }
++
++    // printf("renderer x: %d, y: %d, w: %d, h: %d\n", renderer->viewport.x, renderer->viewport.y, renderer->viewport.h, renderer->viewport.h );
++    // renderer->viewport.h = 480;
++    // renderer->viewport.w = 320;
++    // renderer->viewport.x = 0;
++    // renderer->viewport.y = 0;
++
+     retval = QueueCmdSetViewport(renderer);
+     return retval < 0 ? retval : FlushRenderCommandsIfNotBatching(renderer);
+ }
+@@ -2954,14 +2961,46 @@
+ {
+     SDL_FRect dstfrect;
+     SDL_FRect *pdstfrect = NULL;
++    SDL_Rect targetrect;
++    SDL_Point origin;
++    
++    // Original size, not landscape oriented
++    int ros_w;
++    int ros_h;
++    SDL_Rect viewport;
++    SDL_Rect viewport_2;
++    SDL_GetRendererOutputSize(renderer, &ros_w, &ros_h);
++    SDL_RenderGetViewport(renderer, &viewport);
++    // probar a invertir el viewport en lugar de usar el logical size
++    viewport_2.h = ros_h;
++    viewport_2.w = ros_w;
++    viewport_2.x = 0;
++    viewport_2.y = 0;
++    SDL_RenderSetViewport(renderer, &viewport_2);
++    //printf(" ros_w: %d ros_h: %d\n", ros_w, ros_h);
++    //printf(" view_w: %d view_h: %d view_x: %d view_y: %d\n", 
++    //        viewport.w, viewport.h, viewport.x, viewport.y);
++
+     if (dstrect) {
++	    dstfrect.x = (-360.0f * renderer->scale.x);
++	    dstfrect.y = 0.0f * renderer->scale.y;
++	    dstfrect.w = (float) ros_w * renderer->scale.x;
++	    dstfrect.h = (float) ros_h * renderer->scale.y;
++
++	pdstfrect = &dstfrect;
+-        dstfrect.x = (float) dstrect->x;
+-        dstfrect.y = (float) dstrect->y;
+-        dstfrect.w = (float) dstrect->w;
+-        dstfrect.h = (float) dstrect->h;
+-        pdstfrect = &dstfrect;
+     }
++
++    dstfrect.x = -160.0f * renderer->scale.x;
++    dstfrect.y = 0.0f * renderer->scale.y;
++    dstfrect.w = (float) ros_w * renderer->scale.x;
++    dstfrect.h = (float) ros_h * renderer->scale.y;
++    pdstfrect = &dstfrect;
++
+     return SDL_RenderCopyF(renderer, texture, srcrect, pdstfrect);
++
++//    return SDL_RenderCopyEx(renderer, texture, srcrect, &targetrect, 
++  //                          270, &origin, SDL_FLIP_NONE);
++
+ }
+ 
+ int
+--- a/src/render/opengles/SDL_render_gles.c	2020-12-21 12:44:36.000000000 -0500
++++ b/src/render/opengles/SDL_render_gles.c	2021-05-26 13:03:33.027728975 -0400
+@@ -982,7 +982,8 @@
+                 /* Translate to flip, rotate, translate to position */
+                 data->glPushMatrix();
+                 data->glTranslatef(translatex, translatey, 0.0f);
++//                data->glRotatef(angle, 0.0, 0.0, 1.0);
++                data->glRotatef(90.0, 0.0, 0.0, 1.0);
+-                data->glRotatef(angle, 0.0, 0.0, 1.0);
+                 data->glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+                 data->glPopMatrix();
+                 break;
+@@ -1278,6 +1279,8 @@
+     data->drawstate.color = 0xFFFFFFFF;
+     data->drawstate.clear_color = 0xFFFFFFFF;
+ 
++    data->glRotatef(270, 1.0, 0.0, 0.0);
++
+     return renderer;
+ 
+ error:
+--- a/src/render/opengles2/SDL_render_gles2.c	2020-12-21 12:44:36.000000000 -0500
++++ b/src/render/opengles2/SDL_render_gles2.c	2021-05-28 09:39:21.748204874 -0400
+@@ -1978,6 +1978,15 @@
+ static SDL_Renderer *
+ GLES2_CreateRenderer(SDL_Window *window, Uint32 flags)
+ {
++    int scale = 2444;
++    GLfloat rotmatrix[4][4] = {{0, 15, 0 , 0},
++                               {10, 0, 0,  0},
++                               {0,  0, 1,  0},
++                               {-scale, 0, 0, scale}};
++    SDL_Rect viewport_2;
++    SDL_Rect targetrect;
++    SDL_Point origin;
++
+     SDL_Renderer *renderer;
+     GLES2_RenderData *data;
+     GLint nFormats;
+@@ -2166,8 +2175,26 @@
+     data->drawstate.blend = SDL_BLENDMODE_INVALID;
+     data->drawstate.color = 0xFFFFFFFF;
+     data->drawstate.clear_color = 0xFFFFFFFF;
++
++    // viewport_2.h = 480;
++    // viewport_2.w = 320;
++    // viewport_2.x = 0;//-ros_w/8;
++    // viewport_2.y = 0;
++    // // SDL_RenderSetLogicalSize(renderer, 640, 480);
++    // // SDL_RenderSetViewport(renderer, &viewport_2);
++    // targetrect.x = 0;
++    // targetrect.y = 480;
++    // targetrect.w = 480;
++    // targetrect.h = 320;
++
++    // origin.x = 0;
++    // origin.y = -100;
++    // SDL_RenderSetLogicalSize(renderer, 480, 320);
++    // SDL_RenderCopyEx(renderer, data->drawstate.texture, &viewport_2, &targetrect, 
++    //                         270, &origin, SDL_FLIP_NONE);
++
++
++    memcpy(data->drawstate.projection, rotmatrix, 4*4*sizeof(GLfloat));
+-    data->drawstate.projection[3][0] = -1.0f;
+-    data->drawstate.projection[3][3] = 1.0f;
+ 
+     GL_CheckError("", renderer);
+ 
+--- a/src/video/SDL_egl.c	2020-12-21 12:44:36.000000000 -0500
++++ b/src/video/SDL_egl.c	2021-05-26 20:50:46.051709818 -0400
+@@ -441,11 +441,11 @@
+     LOAD_FUNC_EGLEXT(eglQueryDevicesEXT);
+     LOAD_FUNC_EGLEXT(eglGetPlatformDisplayEXT);
+     /* Atomic functions */
++    // LOAD_FUNC_EGLEXT(eglCreateSyncKHR);
++    // LOAD_FUNC_EGLEXT(eglDestroySyncKHR);
++    // LOAD_FUNC_EGLEXT(eglDupNativeFenceFDANDROID);
++    // LOAD_FUNC_EGLEXT(eglWaitSyncKHR);
++    // LOAD_FUNC_EGLEXT(eglClientWaitSyncKHR);
+-    LOAD_FUNC_EGLEXT(eglCreateSyncKHR);
+-    LOAD_FUNC_EGLEXT(eglDestroySyncKHR);
+-    LOAD_FUNC_EGLEXT(eglDupNativeFenceFDANDROID);
+-    LOAD_FUNC_EGLEXT(eglWaitSyncKHR);
+-    LOAD_FUNC_EGLEXT(eglClientWaitSyncKHR);
+     /* Atomic functions end */
+ 
+     if (path) {
+--- a/src/video/SDL_egl_c.h	2020-12-21 12:44:36.000000000 -0500
++++ b/src/video/SDL_egl_c.h	2021-05-26 20:50:35.475772893 -0400
+@@ -103,15 +103,15 @@
+ 
+    /* Atomic functions */
+ 
++    // EGLSyncKHR(EGLAPIENTRY *eglCreateSyncKHR)(EGLDisplay dpy, EGLenum type, const EGLint *attrib_list);
+-    EGLSyncKHR(EGLAPIENTRY *eglCreateSyncKHR)(EGLDisplay dpy, EGLenum type, const EGLint *attrib_list);
+ 
++    // EGLBoolean(EGLAPIENTRY *eglDestroySyncKHR)(EGLDisplay dpy, EGLSyncKHR sync);
+-    EGLBoolean(EGLAPIENTRY *eglDestroySyncKHR)(EGLDisplay dpy, EGLSyncKHR sync);
+ 
++    // EGLint(EGLAPIENTRY *eglDupNativeFenceFDANDROID)(EGLDisplay dpy, EGLSyncKHR sync); 
+-    EGLint(EGLAPIENTRY *eglDupNativeFenceFDANDROID)(EGLDisplay dpy, EGLSyncKHR sync); 
+ 
++    // EGLint(EGLAPIENTRY *eglWaitSyncKHR)(EGLDisplay dpy, EGLSyncKHR sync, EGLint flags);
+-    EGLint(EGLAPIENTRY *eglWaitSyncKHR)(EGLDisplay dpy, EGLSyncKHR sync, EGLint flags);
+ 
++    // EGLint(EGLAPIENTRY *eglClientWaitSyncKHR)(EGLDisplay dpy, EGLSyncKHR sync, EGLint flags, EGLTimeKHR timeout);
+-    EGLint(EGLAPIENTRY *eglClientWaitSyncKHR)(EGLDisplay dpy, EGLSyncKHR sync, EGLint flags, EGLTimeKHR timeout);
+ 
+     /* Atomic functions end */
+ 
+--- a/src/video/SDL_sysvideo.h	2020-12-21 12:44:36.000000000 -0500
++++ b/src/video/SDL_sysvideo.h	2021-05-18 10:28:12.839262088 -0400
+@@ -439,6 +439,7 @@
+ extern VideoBootStrap OFFSCREEN_bootstrap;
+ extern VideoBootStrap OS2DIVE_bootstrap;
+ extern VideoBootStrap OS2VMAN_bootstrap;
++extern VideoBootStrap S30_bootstrap;
+ 
+ extern SDL_VideoDevice *SDL_GetVideoDevice(void);
+ extern int SDL_AddBasicVideoDisplay(const SDL_DisplayMode * desktop_mode);
+--- a/src/video/SDL_video.c	2020-12-21 12:44:36.000000000 -0500
++++ b/src/video/SDL_video.c	2021-05-25 21:30:12.033208423 -0400
+@@ -85,6 +85,9 @@
+ #if SDL_VIDEO_DRIVER_PANDORA
+     &PND_bootstrap,
+ #endif
++#if SDL_VIDEO_DRIVER_POCKETGOS30
++    &S30_bootstrap,
++#endif
+ #if SDL_VIDEO_DRIVER_UIKIT
+     &UIKIT_bootstrap,
+ #endif
+@@ -1541,10 +1544,10 @@
+     }
+     window->magic = &_this->window_magic;
+     window->id = _this->next_object_id++;
++    window->x = y;
++    window->y = x;
++    window->w = h;
++    window->h = w;
+-    window->x = x;
+-    window->y = y;
+-    window->w = w;
+-    window->h = h;
+     if (SDL_WINDOWPOS_ISUNDEFINED(x) || SDL_WINDOWPOS_ISUNDEFINED(y) ||
+         SDL_WINDOWPOS_ISCENTERED(x) || SDL_WINDOWPOS_ISCENTERED(y)) {
+         SDL_VideoDisplay *display = SDL_GetDisplayForWindow(window);
+--- a/src/video/pocketgos30/SDL_pocketgos30.c	1969-12-31 19:00:00.000000000 -0500
++++ b/src/video/pocketgos30/SDL_pocketgos30.c	2021-05-28 09:39:04.456307525 -0400
+@@ -0,0 +1,789 @@
++/*
++  Simple DirectMedia Layer
++  Copyright (C) 1997-2020 Sam Lantinga <slouken@libsdl.org>
++
++  This software is provided 'as-is', without any express or implied
++  warranty.  In no event will the authors be held liable for any damages
++  arising from the use of this software.
++
++  Permission is granted to anyone to use this software for any purpose,
++  including commercial applications, and to alter it and redistribute it
++  freely, subject to the following restrictions:
++
++  1. The origin of this software must not be misrepresented; you must not
++     claim that you wrote the original software. If you use this software
++     in a product, an acknowledgment in the product documentation would be
++     appreciated but is not required.
++  2. Altered source versions must be plainly marked as such, and must not be
++     misrepresented as being the original software.
++  3. This notice may not be removed or altered from any source distribution.
++*/
++#include "../../SDL_internal.h"
++
++#if SDL_VIDEO_DRIVER_POCKETGOS30
++
++/* SDL internals */
++#include "../SDL_sysvideo.h"
++#include "SDL_version.h"
++#include "SDL_syswm.h"
++#include "SDL_loadso.h"
++#include "SDL_events.h"
++#include "../../events/SDL_mouse_c.h"
++#include "../../events/SDL_keyboard_c.h"
++
++/* S30 declarations */
++#include "SDL_pocketgos30.h"
++#include "SDL_pocketgos30_events.h"
++
++/* WIZ declarations */
++#include "GLES2/gl2.h"
++#include "EGL/egl.h"
++
++static void
++S30_destroy(SDL_VideoDevice * device)
++{
++    if (device->driverdata != NULL) {
++        SDL_free(device->driverdata);
++        device->driverdata = NULL;
++    }
++    SDL_free(device);
++}
++
++static SDL_VideoDevice *
++S30_create()
++{
++    SDL_VideoDevice *device;
++    SDL_VideoData *phdata;
++
++    /* Initialize SDL_VideoDevice structure */
++    device = (SDL_VideoDevice *) SDL_calloc(1, sizeof(SDL_VideoDevice));
++    if (device == NULL) {
++        SDL_OutOfMemory();
++        return NULL;
++    }
++
++    /* Initialize internal Pandora specific data */
++    phdata = (SDL_VideoData *) SDL_calloc(1, sizeof(SDL_VideoData));
++    if (phdata == NULL) {
++        SDL_OutOfMemory();
++        SDL_free(device);
++        return NULL;
++    }
++
++    device->driverdata = phdata;
++
++    phdata->egl_initialized = SDL_TRUE;
++
++
++    /* Setup amount of available displays */
++    device->num_displays = 0;
++
++    /* Set device free function */
++    device->free = S30_destroy;
++
++    /* Setup all functions which we can handle */
++    device->VideoInit = S30_videoinit;
++    device->VideoQuit = S30_videoquit;
++    device->GetDisplayModes = S30_getdisplaymodes;
++    device->SetDisplayMode = S30_setdisplaymode;
++    device->CreateSDLWindow = S30_createwindow;
++    device->CreateSDLWindowFrom = S30_createwindowfrom;
++    device->SetWindowTitle = S30_setwindowtitle;
++    device->SetWindowIcon = S30_setwindowicon;
++    device->SetWindowPosition = S30_setwindowposition;
++    device->SetWindowSize = S30_setwindowsize;
++    device->ShowWindow = S30_showwindow;
++    device->HideWindow = S30_hidewindow;
++    device->RaiseWindow = S30_raisewindow;
++    device->MaximizeWindow = S30_maximizewindow;
++    device->MinimizeWindow = S30_minimizewindow;
++    device->RestoreWindow = S30_restorewindow;
++    device->SetWindowGrab = S30_setwindowgrab;
++    device->DestroyWindow = S30_destroywindow;
++#if 0
++    device->GetWindowWMInfo = S30_getwindowwminfo;
++#endif
++    device->GL_LoadLibrary = S30_gl_loadlibrary;
++    device->GL_GetProcAddress = S30_gl_getprocaddres;
++    device->GL_UnloadLibrary = S30_gl_unloadlibrary;
++    device->GL_CreateContext = S30_gl_createcontext;
++    device->GL_MakeCurrent = S30_gl_makecurrent;
++    device->GL_SetSwapInterval = S30_gl_setswapinterval;
++    device->GL_GetSwapInterval = S30_gl_getswapinterval;
++    device->GL_SwapWindow = S30_gl_swapwindow;
++    device->GL_DeleteContext = S30_gl_deletecontext;
++    device->PumpEvents = S30_PumpEvents;
++
++    /* !!! FIXME: implement SetWindowBordered */
++
++    return device;
++}
++
++VideoBootStrap S30_bootstrap = {
++    "pocketgos30",
++    "PocketGo S30 Video Driver",
++    S30_create
++};
++
++/*****************************************************************************/
++/* SDL Video and Display initialization/handling functions                   */
++/*****************************************************************************/
++int
++S30_videoinit(_THIS)
++{
++    SDL_VideoDisplay display;
++    SDL_DisplayMode current_mode;
++
++    SDL_zero(current_mode);
++    current_mode.w = 320;
++    current_mode.h = 480;
++    current_mode.refresh_rate = 60;
++    current_mode.format = SDL_PIXELFORMAT_ARGB8888;
++    current_mode.driverdata = NULL;
++
++    SDL_zero(display);
++    display.desktop_mode = current_mode;
++    display.current_mode = current_mode;
++    display.driverdata = NULL;
++
++    display.orientation = SDL_ORIENTATION_PORTRAIT_FLIPPED;
++    
++    SDL_AddVideoDisplay(&display, SDL_FALSE);
++    S30_EventsInit();
++    return 1;
++}
++
++void
++S30_videoquit(_THIS)
++{
++    S30_EventsQuit();
++}
++
++void
++S30_getdisplaymodes(_THIS, SDL_VideoDisplay * display)
++{
++
++}
++
++int
++S30_setdisplaymode(_THIS, SDL_VideoDisplay * display, SDL_DisplayMode * mode)
++{
++    return 0;
++}
++
++int
++S30_createwindow(_THIS, SDL_Window * window)
++{
++    SDL_VideoData *phdata = (SDL_VideoData *) _this->driverdata;
++
++    SDL_WindowData *wdata;
++
++    EGLint iMajorVersion, iMinorVersion; 
++
++    /* Allocate window internal data */
++    wdata = (SDL_WindowData *) SDL_calloc(1, sizeof(SDL_WindowData));
++    if (wdata == NULL) {
++        return SDL_OutOfMemory();
++    }
++
++    /* Setup driver data for this window */
++    window->driverdata = wdata;
++
++    /* Check if window must support OpenGL ES rendering */
++    if ((window->flags & SDL_WINDOW_OPENGL) == SDL_WINDOW_OPENGL) {
++
++        EGLBoolean initstatus;
++
++        /* Mark this window as OpenGL ES compatible */
++        wdata->uses_gles = SDL_TRUE;
++
++        /* Create connection to OpenGL ES */
++        if (phdata->egl_display == EGL_NO_DISPLAY) {
++            phdata->egl_display = eglGetDisplay((NativeDisplayType) 0);
++            if (phdata->egl_display == EGL_NO_DISPLAY) {
++                return SDL_SetError("S30: Can't get connection to OpenGL ES");
++            }
++
++            initstatus = eglInitialize(phdata->egl_display, &iMajorVersion, &iMinorVersion);
++            if (initstatus != EGL_TRUE) {
++                return SDL_SetError("S30: Can't init OpenGL ES library");
++            }
++        }
++
++        phdata->egl_refcount++;
++    }
++    
++    SDL_SetMouseFocus(window);
++    SDL_SetKeyboardFocus(window);
++
++    /* Window has been successfully created */
++    return 0;
++}
++
++int
++S30_createwindowfrom(_THIS, SDL_Window * window, const void *data)
++{
++    return -1;
++}
++
++void
++S30_setwindowtitle(_THIS, SDL_Window * window)
++{
++}
++void
++S30_setwindowicon(_THIS, SDL_Window * window, SDL_Surface * icon)
++{
++}
++void
++S30_setwindowposition(_THIS, SDL_Window * window)
++{
++}
++void
++S30_setwindowsize(_THIS, SDL_Window * window)
++{
++}
++void
++S30_showwindow(_THIS, SDL_Window * window)
++{
++}
++void
++S30_hidewindow(_THIS, SDL_Window * window)
++{
++}
++void
++S30_raisewindow(_THIS, SDL_Window * window)
++{
++}
++void
++S30_maximizewindow(_THIS, SDL_Window * window)
++{
++}
++void
++S30_minimizewindow(_THIS, SDL_Window * window)
++{
++}
++void
++S30_restorewindow(_THIS, SDL_Window * window)
++{
++}
++void
++S30_setwindowgrab(_THIS, SDL_Window * window, SDL_bool grabbed)
++{
++}
++void
++S30_destroywindow(_THIS, SDL_Window * window)
++{
++    SDL_VideoData *phdata = (SDL_VideoData *) _this->driverdata;
++    eglTerminate(phdata->egl_display);
++}
++
++/*****************************************************************************/
++/* SDL Window Manager function                                               */
++/*****************************************************************************/
++#if 0
++SDL_bool
++S30_getwindowwminfo(_THIS, SDL_Window * window, struct SDL_SysWMinfo *info)
++{
++    if (info->version.major <= SDL_MAJOR_VERSION) {
++        return SDL_TRUE;
++    } else {
++        SDL_SetError("application not compiled with SDL %d.%d",
++                     SDL_MAJOR_VERSION, SDL_MINOR_VERSION);
++        return SDL_FALSE;
++    }
++
++    /* Failed to get window manager information */
++    return SDL_FALSE;
++}
++#endif
++
++/*****************************************************************************/
++/* SDL OpenGL/OpenGL ES functions                                            */
++/*****************************************************************************/
++int
++S30_gl_loadlibrary(_THIS, const char *path)
++{
++    /* Check if OpenGL ES library is specified for GF driver */
++    if (path == NULL) {
++        path = SDL_getenv("SDL_OPENGL_LIBRARY");
++        if (path == NULL) {
++            path = SDL_getenv("SDL_OPENGLES_LIBRARY");
++        }
++    }
++
++    /* Check if default library loading requested */
++    if (path == NULL) {
++        /* Already linked with GF library which provides egl* subset of  */
++        /* functions, use Common profile of OpenGL ES library by default */
++        path = "/lib/libMali.so";
++    }
++
++    /* Load dynamic library */
++    _this->gl_config.dll_handle = SDL_LoadObject(path);
++    if (!_this->gl_config.dll_handle) {
++        /* Failed to load new GL ES library */
++        return SDL_SetError("S30: Failed to locate OpenGL ES library");
++    }
++
++    /* Store OpenGL ES library path and name */
++    SDL_strlcpy(_this->gl_config.driver_path, path,
++                SDL_arraysize(_this->gl_config.driver_path));
++
++    /* New OpenGL ES library is loaded */
++    return 0;
++}
++
++void *
++S30_gl_getprocaddres(_THIS, const char *proc)
++{
++    void *function_address;
++
++    /* Try to get function address through the egl interface */
++    function_address = eglGetProcAddress(proc);
++    if (function_address != NULL) {
++        return function_address;
++    }
++
++    /* Then try to get function in the OpenGL ES library */
++    if (_this->gl_config.dll_handle) {
++        function_address =
++            SDL_LoadFunction(_this->gl_config.dll_handle, proc);
++        if (function_address != NULL) {
++            return function_address;
++        }
++    }
++
++    /* Failed to get GL ES function address pointer */
++    SDL_SetError("S30: Cannot locate OpenGL ES function name");
++    return NULL;
++}
++
++void
++S30_gl_unloadlibrary(_THIS)
++{
++    SDL_VideoData *phdata = (SDL_VideoData *) _this->driverdata;
++
++    if (phdata->egl_initialized == SDL_TRUE) {
++        /* Unload OpenGL ES library */
++        if (_this->gl_config.dll_handle) {
++            SDL_UnloadObject(_this->gl_config.dll_handle);
++            _this->gl_config.dll_handle = NULL;
++        }
++    } else {
++        SDL_SetError("S30: GF initialization failed, no OpenGL ES support");
++    }
++}
++
++SDL_GLContext
++S30_gl_createcontext(_THIS, SDL_Window * window)
++{
++    SDL_VideoData *phdata = (SDL_VideoData *) _this->driverdata;
++    SDL_WindowData *wdata = (SDL_WindowData *) window->driverdata;
++    EGLBoolean status;
++    EGLint configs;
++    uint32_t attr_pos;
++    EGLint attr_value;
++    EGLint cit;
++
++    // Request GLES 2.0
++    EGLint const context_attrib_list[] = {
++        EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE
++    };
++
++    /* Check if EGL was initialized */
++    if (phdata->egl_initialized != SDL_TRUE) {
++        SDL_SetError("S30: EGL initialization failed, no OpenGL ES support");
++        return NULL;
++    }
++
++    /* Prepare attributes list to pass them to OpenGL ES */
++    attr_pos = 0;
++    wdata->gles_attributes[attr_pos++] = EGL_SURFACE_TYPE;
++    wdata->gles_attributes[attr_pos++] = EGL_WINDOW_BIT;
++    wdata->gles_attributes[attr_pos++] = EGL_RED_SIZE;
++    wdata->gles_attributes[attr_pos++] = _this->gl_config.red_size;
++    wdata->gles_attributes[attr_pos++] = EGL_GREEN_SIZE;
++    wdata->gles_attributes[attr_pos++] = _this->gl_config.green_size;
++    wdata->gles_attributes[attr_pos++] = EGL_BLUE_SIZE;
++    wdata->gles_attributes[attr_pos++] = _this->gl_config.blue_size;
++    wdata->gles_attributes[attr_pos++] = EGL_ALPHA_SIZE;
++
++    /* Setup alpha size in bits */
++    if (_this->gl_config.alpha_size) {
++        wdata->gles_attributes[attr_pos++] = _this->gl_config.alpha_size;
++    } else {
++        wdata->gles_attributes[attr_pos++] = EGL_DONT_CARE;
++    }
++
++    /* Setup color buffer size */
++    if (_this->gl_config.buffer_size) {
++        wdata->gles_attributes[attr_pos++] = EGL_BUFFER_SIZE;
++        wdata->gles_attributes[attr_pos++] = _this->gl_config.buffer_size;
++    } else {
++        wdata->gles_attributes[attr_pos++] = EGL_BUFFER_SIZE;
++        wdata->gles_attributes[attr_pos++] = EGL_DONT_CARE;
++    }
++
++    /* Setup depth buffer bits */
++    wdata->gles_attributes[attr_pos++] = EGL_DEPTH_SIZE;
++    wdata->gles_attributes[attr_pos++] = _this->gl_config.depth_size;
++
++    /* Setup stencil bits */
++    if (_this->gl_config.stencil_size) {
++        wdata->gles_attributes[attr_pos++] = EGL_STENCIL_SIZE;
++        wdata->gles_attributes[attr_pos++] = _this->gl_config.buffer_size;
++    } else {
++        wdata->gles_attributes[attr_pos++] = EGL_STENCIL_SIZE;
++        wdata->gles_attributes[attr_pos++] = EGL_DONT_CARE;
++    }
++
++    /* Set number of samples in multisampling */
++    if (_this->gl_config.multisamplesamples) {
++        wdata->gles_attributes[attr_pos++] = EGL_SAMPLES;
++        wdata->gles_attributes[attr_pos++] =
++            _this->gl_config.multisamplesamples;
++    }
++
++    /* Multisample buffers, OpenGL ES 1.0 spec defines 0 or 1 buffer */
++    if (_this->gl_config.multisamplebuffers) {
++        wdata->gles_attributes[attr_pos++] = EGL_SAMPLE_BUFFERS;
++        wdata->gles_attributes[attr_pos++] =
++            _this->gl_config.multisamplebuffers;
++    }
++
++    /* Finish attributes list */
++    wdata->gles_attributes[attr_pos] = EGL_NONE;
++
++    /* Request first suitable framebuffer configuration */
++    status = eglChooseConfig(phdata->egl_display, wdata->gles_attributes,
++                             wdata->gles_configs, 1, &configs);
++    if (status != EGL_TRUE) {
++        SDL_SetError("S30: Can't find closest configuration for OpenGL ES");
++        return NULL;
++    }
++
++    /* Check if nothing has been found, try "don't care" settings */
++    if (configs == 0) {
++        int32_t it;
++        int32_t jt;
++        GLint depthbits[4] = { 32, 24, 16, EGL_DONT_CARE };
++
++        for (it = 0; it < 4; it++) {
++            for (jt = 16; jt >= 0; jt--) {
++                /* Don't care about color buffer bits, use what exist */
++                /* Replace previous set data with EGL_DONT_CARE       */
++                attr_pos = 0;
++                wdata->gles_attributes[attr_pos++] = EGL_SURFACE_TYPE;
++                wdata->gles_attributes[attr_pos++] = EGL_WINDOW_BIT;
++                wdata->gles_attributes[attr_pos++] = EGL_RED_SIZE;
++                wdata->gles_attributes[attr_pos++] = EGL_DONT_CARE;
++                wdata->gles_attributes[attr_pos++] = EGL_GREEN_SIZE;
++                wdata->gles_attributes[attr_pos++] = EGL_DONT_CARE;
++                wdata->gles_attributes[attr_pos++] = EGL_BLUE_SIZE;
++                wdata->gles_attributes[attr_pos++] = EGL_DONT_CARE;
++                wdata->gles_attributes[attr_pos++] = EGL_ALPHA_SIZE;
++                wdata->gles_attributes[attr_pos++] = EGL_DONT_CARE;
++                wdata->gles_attributes[attr_pos++] = EGL_BUFFER_SIZE;
++                wdata->gles_attributes[attr_pos++] = EGL_DONT_CARE;
++
++                /* Try to find requested or smallest depth */
++                if (_this->gl_config.depth_size) {
++                    wdata->gles_attributes[attr_pos++] = EGL_DEPTH_SIZE;
++                    wdata->gles_attributes[attr_pos++] = depthbits[it];
++                } else {
++                    wdata->gles_attributes[attr_pos++] = EGL_DEPTH_SIZE;
++                    wdata->gles_attributes[attr_pos++] = EGL_DONT_CARE;
++                }
++
++                if (_this->gl_config.stencil_size) {
++                    wdata->gles_attributes[attr_pos++] = EGL_STENCIL_SIZE;
++                    wdata->gles_attributes[attr_pos++] = jt;
++                } else {
++                    wdata->gles_attributes[attr_pos++] = EGL_STENCIL_SIZE;
++                    wdata->gles_attributes[attr_pos++] = EGL_DONT_CARE;
++                }
++
++                wdata->gles_attributes[attr_pos++] = EGL_SAMPLES;
++                wdata->gles_attributes[attr_pos++] = EGL_DONT_CARE;
++                wdata->gles_attributes[attr_pos++] = EGL_SAMPLE_BUFFERS;
++                wdata->gles_attributes[attr_pos++] = EGL_DONT_CARE;
++                wdata->gles_attributes[attr_pos] = EGL_NONE;
++
++                /* Request first suitable framebuffer configuration */
++                status =
++                    eglChooseConfig(phdata->egl_display,
++                                    wdata->gles_attributes,
++                                    wdata->gles_configs, 1, &configs);
++
++                if (status != EGL_TRUE) {
++                    SDL_SetError
++                        ("S30: Can't find closest configuration for OpenGL ES");
++                    return NULL;
++                }
++                if (configs != 0) {
++                    break;
++                }
++            }
++            if (configs != 0) {
++                break;
++            }
++        }
++
++        /* No available configs */
++        if (configs == 0) {
++            SDL_SetError("S30: Can't find any configuration for OpenGL ES");
++            return NULL;
++        }
++    }
++
++    /* Initialize config index */
++    wdata->gles_config = 0;
++
++    /* Now check each configuration to find out the best */
++    for (cit = 0; cit < configs; cit++) {
++        uint32_t stencil_found;
++        uint32_t depth_found;
++
++        stencil_found = 0;
++        depth_found = 0;
++
++        if (_this->gl_config.stencil_size) {
++            status =
++                eglGetConfigAttrib(phdata->egl_display,
++                                   wdata->gles_configs[cit], EGL_STENCIL_SIZE,
++                                   &attr_value);
++            if (status == EGL_TRUE) {
++                if (attr_value != 0) {
++                    stencil_found = 1;
++                }
++            }
++        } else {
++            stencil_found = 1;
++        }
++
++        if (_this->gl_config.depth_size) {
++            status =
++                eglGetConfigAttrib(phdata->egl_display,
++                                   wdata->gles_configs[cit], EGL_DEPTH_SIZE,
++                                   &attr_value);
++            if (status == EGL_TRUE) {
++                if (attr_value != 0) {
++                    depth_found = 1;
++                }
++            }
++        } else {
++            depth_found = 1;
++        }
++
++        /* Exit from loop if found appropriate configuration */
++        if ((depth_found != 0) && (stencil_found != 0)) {
++            break;
++        }
++    }
++
++    /* If best could not be found, use first */
++    if (cit == configs) {
++        cit = 0;
++    }
++    wdata->gles_config = cit;
++
++    /* Create OpenGL ES context */
++    wdata->gles_context =
++        eglCreateContext(phdata->egl_display,
++                         wdata->gles_configs[wdata->gles_config], NULL, context_attrib_list);
++    if (wdata->gles_context == EGL_NO_CONTEXT) {
++        SDL_SetError("S30: OpenGL ES context creation failed");
++        return NULL;
++    }
++
++    wdata->gles_surface =
++        eglCreateWindowSurface(phdata->egl_display,
++                               wdata->gles_configs[wdata->gles_config],
++                               (NativeWindowType) 0, NULL);
++
++    if (wdata->gles_surface == 0) {
++        SDL_SetError("Error : eglCreateWindowSurface failed;");
++        return NULL;
++    }
++
++    /* Make just created context current */
++    status =
++        eglMakeCurrent(phdata->egl_display, wdata->gles_surface,
++                       wdata->gles_surface, wdata->gles_context);
++    if (status != EGL_TRUE) {
++        /* Destroy OpenGL ES surface */
++        eglDestroySurface(phdata->egl_display, wdata->gles_surface);
++        eglDestroyContext(phdata->egl_display, wdata->gles_context);
++        wdata->gles_context = EGL_NO_CONTEXT;
++        SDL_SetError("S30: Can't set OpenGL ES context on creation");
++        return NULL;
++    }
++
++    _this->gl_config.accelerated = 1;
++
++    /* Always clear stereo enable, since OpenGL ES do not supports stereo */
++    _this->gl_config.stereo = 0;
++
++    /* Get back samples and samplebuffers configurations. Rest framebuffer */
++    /* parameters could be obtained through the OpenGL ES API              */
++    status =
++        eglGetConfigAttrib(phdata->egl_display,
++                           wdata->gles_configs[wdata->gles_config],
++                           EGL_SAMPLES, &attr_value);
++    if (status == EGL_TRUE) {
++        _this->gl_config.multisamplesamples = attr_value;
++    }
++    status =
++        eglGetConfigAttrib(phdata->egl_display,
++                           wdata->gles_configs[wdata->gles_config],
++                           EGL_SAMPLE_BUFFERS, &attr_value);
++    if (status == EGL_TRUE) {
++        _this->gl_config.multisamplebuffers = attr_value;
++    }
++
++    /* Get back stencil and depth buffer sizes */
++    status =
++        eglGetConfigAttrib(phdata->egl_display,
++                           wdata->gles_configs[wdata->gles_config],
++                           EGL_DEPTH_SIZE, &attr_value);
++    if (status == EGL_TRUE) {
++        _this->gl_config.depth_size = attr_value;
++    }
++    status =
++        eglGetConfigAttrib(phdata->egl_display,
++                           wdata->gles_configs[wdata->gles_config],
++                           EGL_STENCIL_SIZE, &attr_value);
++    if (status == EGL_TRUE) {
++        _this->gl_config.stencil_size = attr_value;
++    }
++
++    /* Under S30 OpenGL ES output can't be double buffered */
++    _this->gl_config.double_buffer = 0;
++
++    /* GL ES context was successfully created */
++    return wdata->gles_context;
++}
++
++int
++S30_gl_makecurrent(_THIS, SDL_Window * window, SDL_GLContext context)
++{
++    SDL_VideoData *phdata = (SDL_VideoData *) _this->driverdata;
++    SDL_WindowData *wdata;
++    EGLBoolean status;
++
++    if (phdata->egl_initialized != SDL_TRUE) {
++        return SDL_SetError("S30: GF initialization failed, no OpenGL ES support");
++    }
++
++    if ((window == NULL) && (context == NULL)) {
++        status =
++            eglMakeCurrent(phdata->egl_display, EGL_NO_SURFACE,
++                           EGL_NO_SURFACE, EGL_NO_CONTEXT);
++        if (status != EGL_TRUE) {
++            /* Failed to set current GL ES context */
++            return SDL_SetError("S30: Can't set OpenGL ES context");
++        }
++    } else {
++        wdata = (SDL_WindowData *) window->driverdata;
++        if (wdata->gles_surface == EGL_NO_SURFACE) {
++            return SDL_SetError
++                ("S30: OpenGL ES surface is not initialized for this window");
++        }
++        if (wdata->gles_context == EGL_NO_CONTEXT) {
++            return SDL_SetError
++                ("S30: OpenGL ES context is not initialized for this window");
++        }
++        if (wdata->gles_context != context) {
++            return SDL_SetError
++                ("S30: OpenGL ES context is not belong to this window");
++        }
++        status =
++            eglMakeCurrent(phdata->egl_display, wdata->gles_surface,
++                           wdata->gles_surface, wdata->gles_context);
++        if (status != EGL_TRUE) {
++            /* Failed to set current GL ES context */
++            return SDL_SetError("S30: Can't set OpenGL ES context");
++        }
++    }
++    return 0;
++}
++
++int
++S30_gl_setswapinterval(_THIS, int interval)
++{
++    SDL_VideoData *phdata = (SDL_VideoData *) _this->driverdata;
++    EGLBoolean status;
++
++    if (phdata->egl_initialized != SDL_TRUE) {
++        return SDL_SetError("S30: EGL initialization failed, no OpenGL ES support");
++    }
++
++    /* Check if OpenGL ES connection has been initialized */
++    if (phdata->egl_display != EGL_NO_DISPLAY) {
++        /* Set swap OpenGL ES interval */
++        status = eglSwapInterval(phdata->egl_display, interval);
++        if (status == EGL_TRUE) {
++            /* Return success to upper level */
++            phdata->swapinterval = interval;
++            return 0;
++        }
++    }
++
++    /* Failed to set swap interval */
++    return SDL_SetError("S30: Cannot set swap interval");
++}
++
++int
++S30_gl_getswapinterval(_THIS)
++{
++    return ((SDL_VideoData *) _this->driverdata)->swapinterval;
++}
++
++int
++S30_gl_swapwindow(_THIS, SDL_Window * window)
++{
++    SDL_VideoData *phdata = (SDL_VideoData *) _this->driverdata;
++    SDL_WindowData *wdata = (SDL_WindowData *) window->driverdata;
++
++    if (phdata->egl_initialized != SDL_TRUE) {
++        return SDL_SetError("S30: GLES initialization failed, no OpenGL ES support");
++    }
++
++    /* Many applications do not uses glFinish(), so we call it for them */
++    glFinish();
++
++    /* Wait until OpenGL ES rendering is completed */
++    eglWaitGL();
++
++    eglSwapBuffers(phdata->egl_display, wdata->gles_surface);
++    return 0;
++}
++
++void
++S30_gl_deletecontext(_THIS, SDL_GLContext context)
++{
++    SDL_VideoData *phdata = (SDL_VideoData *) _this->driverdata;
++    EGLBoolean status;
++
++    if (phdata->egl_initialized != SDL_TRUE) {
++        SDL_SetError("S30: GLES initialization failed, no OpenGL ES support");
++        return;
++    }
++
++    /* Check if OpenGL ES connection has been initialized */
++    if (phdata->egl_display != EGL_NO_DISPLAY) {
++        if (context != EGL_NO_CONTEXT) {
++            status = eglDestroyContext(phdata->egl_display, context);
++            if (status != EGL_TRUE) {
++                /* Error during OpenGL ES context destroying */
++                SDL_SetError("S30: OpenGL ES context destroy error");
++                return;
++            }
++        }
++    }
++    return;
++}
++
++#endif /* SDL_VIDEO_DRIVER_POCKETGOS30 */
++
++/* vi: set ts=4 sw=4 expandtab: */
+--- a/src/video/pocketgos30/SDL_pocketgos30.h	1969-12-31 19:00:00.000000000 -0500
++++ b/src/video/pocketgos30/SDL_pocketgos30.h	2021-05-18 10:28:12.867261911 -0400
+@@ -0,0 +1,102 @@
++/*
++  Simple DirectMedia Layer
++  Copyright (C) 1997-2020 Sam Lantinga <slouken@libsdl.org>
++
++  This software is provided 'as-is', without any express or implied
++  warranty.  In no event will the authors be held liable for any damages
++  arising from the use of this software.
++
++  Permission is granted to anyone to use this software for any purpose,
++  including commercial applications, and to alter it and redistribute it
++  freely, subject to the following restrictions:
++
++  1. The origin of this software must not be misrepresented; you must not
++     claim that you wrote the original software. If you use this software
++     in a product, an acknowledgment in the product documentation would be
++     appreciated but is not required.
++  2. Altered source versions must be plainly marked as such, and must not be
++     misrepresented as being the original software.
++  3. This notice may not be removed or altered from any source distribution.
++*/
++
++#ifndef __SDL_POCKETGOS30_H__
++#define __SDL_POCKETGOS30_H__
++
++#include "GLES2/gl2.h"
++#include "EGL/egl.h"
++
++#include "../../SDL_internal.h"
++#include "../SDL_sysvideo.h"
++
++typedef struct SDL_VideoData
++{
++    SDL_bool egl_initialized;   /* OpenGL ES device initialization status */
++    EGLDisplay egl_display;     /* OpenGL ES display connection           */
++    uint32_t egl_refcount;      /* OpenGL ES reference count              */
++    uint32_t swapinterval;      /* OpenGL ES default swap interval        */
++
++} SDL_VideoData;
++
++
++typedef struct SDL_DisplayData
++{
++
++} SDL_DisplayData;
++
++
++typedef struct SDL_WindowData
++{
++    SDL_bool uses_gles;         /* if true window must support OpenGL ES */
++
++    EGLConfig gles_configs[32];
++    EGLint gles_config;         /* OpenGL ES configuration index      */
++    EGLContext gles_context;    /* OpenGL ES context                  */
++    EGLint gles_attributes[256];        /* OpenGL ES attributes for context   */
++    EGLSurface gles_surface;    /* OpenGL ES target rendering surface */
++
++} SDL_WindowData;
++
++
++/****************************************************************************/
++/* SDL_VideoDevice functions declaration                                    */
++/****************************************************************************/
++
++/* Display and window functions */
++int S30_videoinit(_THIS);
++void S30_videoquit(_THIS);
++void S30_getdisplaymodes(_THIS, SDL_VideoDisplay * display);
++int S30_setdisplaymode(_THIS, SDL_VideoDisplay * display, SDL_DisplayMode * mode);
++int S30_createwindow(_THIS, SDL_Window * window);
++int S30_createwindowfrom(_THIS, SDL_Window * window, const void *data);
++void S30_setwindowtitle(_THIS, SDL_Window * window);
++void S30_setwindowicon(_THIS, SDL_Window * window, SDL_Surface * icon);
++void S30_setwindowposition(_THIS, SDL_Window * window);
++void S30_setwindowsize(_THIS, SDL_Window * window);
++void S30_showwindow(_THIS, SDL_Window * window);
++void S30_hidewindow(_THIS, SDL_Window * window);
++void S30_raisewindow(_THIS, SDL_Window * window);
++void S30_maximizewindow(_THIS, SDL_Window * window);
++void S30_minimizewindow(_THIS, SDL_Window * window);
++void S30_restorewindow(_THIS, SDL_Window * window);
++void S30_setwindowgrab(_THIS, SDL_Window * window, SDL_bool grabbed);
++void S30_destroywindow(_THIS, SDL_Window * window);
++
++/* Window manager function */
++SDL_bool S30_getwindowwminfo(_THIS, SDL_Window * window,
++                             struct SDL_SysWMinfo *info);
++
++/* OpenGL/OpenGL ES functions */
++int S30_gl_loadlibrary(_THIS, const char *path);
++void *S30_gl_getprocaddres(_THIS, const char *proc);
++void S30_gl_unloadlibrary(_THIS);
++SDL_GLContext S30_gl_createcontext(_THIS, SDL_Window * window);
++int S30_gl_makecurrent(_THIS, SDL_Window * window, SDL_GLContext context);
++int S30_gl_setswapinterval(_THIS, int interval);
++int S30_gl_getswapinterval(_THIS);
++int S30_gl_swapwindow(_THIS, SDL_Window * window);
++void S30_gl_deletecontext(_THIS, SDL_GLContext context);
++
++
++#endif /* __SDL_POCKETGOS30_H__ */
++
++/* vi: set ts=4 sw=4 expandtab: */
+--- a/src/video/pocketgos30/SDL_pocketgos30_events.c	1969-12-31 19:00:00.000000000 -0500
++++ b/src/video/pocketgos30/SDL_pocketgos30_events.c	2021-05-18 10:28:12.867261911 -0400
+@@ -0,0 +1,111 @@
++/*
++  Simple DirectMedia Layer
++  Copyright (C) 1997-2020 Sam Lantinga <slouken@libsdl.org>
++
++  This software is provided 'as-is', without any express or implied
++  warranty.  In no event will the authors be held liable for any damages
++  arising from the use of this software.
++
++  Permission is granted to anyone to use this software for any purpose,
++  including commercial applications, and to alter it and redistribute it
++  freely, subject to the following restrictions:
++
++  1. The origin of this software must not be misrepresented; you must not
++     claim that you wrote the original software. If you use this software
++     in a product, an acknowledgment in the product documentation would be
++     appreciated but is not required.
++  2. Altered source versions must be plainly marked as such, and must not be
++     misrepresented as being the original software.
++  3. This notice may not be removed or altered from any source distribution.
++*/
++#include "../../SDL_internal.h"
++
++#if SDL_VIDEO_DRIVER_POCKETGOS30
++
++/* Being a null driver, there's no event stream. We just define stubs for
++   most of the API. */
++
++#include "../../events/SDL_events_c.h"
++
++#include <sys/stat.h>
++#include <fcntl.h>
++#include <linux/input.h>
++#include <unistd.h>
++
++#include "SDL_scancode.h"
++#include "../../events/scancodes_pocketgos30.h"
++
++static int fdevent0;
++static int fdevent3;
++
++/*struct input_event {
++    struct timeval time;
++    unsigned short type;
++    unsigned short code;
++    unsigned int value;
++};*/
++
++void S30_EventsInit()
++{
++	fdevent0 = open("/dev/input/event0", O_RDONLY|O_NONBLOCK);
++	fdevent3 = open("/dev/input/event3", O_RDONLY|O_NONBLOCK);
++}
++
++void S30_EventsQuit()
++{
++	if (fdevent0 > 0)
++		close(fdevent0);
++	
++	if (fdevent3 > 0)
++		close(fdevent3);
++}
++
++static void S30_HandleEvent(struct input_event event) {
++	if (event.type > 0 && event.code > 0) {
++		int code = pocketgo30_scancode_table[event.code];
++		//printf("event.type %d, event.code %d, event.value %d\n", event.type, event.code, event.value);
++		if (code > SDL_SCANCODE_UNKNOWN) {
++			//printf("event.code %d -> %d\n", event.code, code);
++			SDL_SendKeyboardKey(event.value, code);
++		}
++	}
++}
++
++void
++S30_PumpEvents(_THIS)
++{
++	struct timeval tv;
++    fd_set fds;
++    int maxfd;
++    int res;
++	struct input_event event;
++
++    tv.tv_sec = 0;
++    tv.tv_usec = 0;
++
++    FD_ZERO(&fds); // Clear FD set for select
++    FD_SET(fdevent0, &fds);
++    FD_SET(fdevent3, &fds);
++
++    maxfd = fdevent0 > fdevent3 ? fdevent0 : fdevent3;
++
++    select(maxfd + 1, &fds, NULL, NULL, &tv);
++
++	if (FD_ISSET(fdevent0, &fds)) {
++		res = read(fdevent0, &event, sizeof(struct input_event));
++		if (res > 0) {
++			S30_HandleEvent(event);
++		}
++	}
++
++	if (FD_ISSET(fdevent3, &fds)) {
++		res = read(fdevent3, &event, sizeof(struct input_event));
++		if (res > 0) {
++			S30_HandleEvent(event);
++		}
++	}
++}
++
++#endif /* SDL_VIDEO_DRIVER_POCKETGOS30 */
++
++/* vi: set ts=4 sw=4 expandtab: */
+--- a/src/video/pocketgos30/SDL_pocketgos30_events.h	1969-12-31 19:00:00.000000000 -0500
++++ b/src/video/pocketgos30/SDL_pocketgos30_events.h	2021-05-18 10:28:12.867261911 -0400
+@@ -0,0 +1,27 @@
++/*
++  Simple DirectMedia Layer
++  Copyright (C) 1997-2020 Sam Lantinga <slouken@libsdl.org>
++
++  This software is provided 'as-is', without any express or implied
++  warranty.  In no event will the authors be held liable for any damages
++  arising from the use of this software.
++
++  Permission is granted to anyone to use this software for any purpose,
++  including commercial applications, and to alter it and redistribute it
++  freely, subject to the following restrictions:
++
++  1. The origin of this software must not be misrepresented; you must not
++     claim that you wrote the original software. If you use this software
++     in a product, an acknowledgment in the product documentation would be
++     appreciated but is not required.
++  2. Altered source versions must be plainly marked as such, and must not be
++     misrepresented as being the original software.
++  3. This notice may not be removed or altered from any source distribution.
++*/
++#include "../../SDL_internal.h"
++
++extern void S30_EventsInit();
++extern void S30_EventsQuit();
++extern void S30_PumpEvents(_THIS);
++
++/* vi: set ts=4 sw=4 expandtab: */
+--- a/configure	2020-12-21 12:44:36.000000000 -0500
++++ b/configure	2021-05-18 10:28:29.971153406 -0400
+@@ -877,6 +877,7 @@
+ enable_video_kmsdrm
+ enable_kmsdrm_shared
+ enable_video_dummy
++enable_video_pocketgos30
+ enable_video_opengl
+ enable_video_opengles
+ enable_video_opengles1
+@@ -1659,6 +1660,8 @@
+   --enable-video-kmsdrm   use KMSDRM video driver [[default=no]]
+   --enable-kmsdrm-shared  dynamically load kmsdrm support [[default=yes]]
+   --enable-video-dummy    use dummy video driver [[default=yes]]
++  --enable-video-pocketgos30	
++                          include PocketGo S30 support [[default=yes]]
+   --enable-video-opengl   include OpenGL support [[default=yes]]
+   --enable-video-opengles include OpenGL ES support [[default=yes]]
+   --enable-video-opengles1
+@@ -22183,6 +22186,25 @@
+     fi
+ }
+ 
++
++CheckPocketGoS30Video()
++{
++# Check whether --enable-video-pocketgos30 was given.
++if test "${enable_video_pocketgos30+set}" = set; then :
++   enableval=$enable_video_pocketgos30;
++else
++   enable_video_pocketgos30=yes
++fi
++
++    if test x$enable_video_pocketgos30 = xyes; then
++$as_echo "#define SDL_VIDEO_DRIVER_POCKETGOS30 1" >>confdefs.h
++        SOURCES="$SOURCES $srcdir/src/video/pocketgos30/*.c"
++	 EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lEGL"
++        have_video=yes
++        SUMMARY_video="${SUMMARY_video} pocketgos30"
++    fi
++}
++
+ CheckQNXVideo()
+ {
+     if test x$enable_video = xyes; then
+@@ -24778,6 +24799,7 @@
+         CheckLinuxVersion
+         CheckRPATH
+         CheckVivanteVideo
++	CheckPocketGoS30Video
+ 
+         SOURCES="$SOURCES $srcdir/src/misc/unix/*.c"
+         have_misc=yes
+--- a/include/SDL_config.h	2020-12-21 12:44:36.000000000 -0500
++++ b/include/SDL_config.h	2021-05-26 13:28:14.295660382 -0400
+@@ -1,3 +1,4 @@
++/* include/SDL_config.h.  Generated from SDL_config.h.in by configure.  */
+ /*
+   Simple DirectMedia Layer
+   Copyright (C) 1997-2020 Sam Lantinga <slouken@libsdl.org>
+@@ -22,34 +23,429 @@
+ #ifndef SDL_config_h_
+ #define SDL_config_h_
+ 
++/**
++ *  \file SDL_config.h.in
++ *
++ *  This is a set of defines to configure the SDL features
++ */
++
++/* General platform specific identifiers */
+ #include "SDL_platform.h"
+ 
++/* Make sure that this isn't included by Visual C++ */
++#ifdef _MSC_VER
++#error You should run hg revert SDL_config.h
++#endif
++
++/* C language features */
++/* #undef const */
++/* #undef inline */
++/* #undef volatile */
+-/**
+- *  \file SDL_config.h
+- */
+ 
++/* C datatypes */
++#ifdef __LP64__
++#define SIZEOF_VOIDP 8
+-/* Add any platform that doesn't build using the configure system. */
+-#if defined(__WIN32__)
+-#include "SDL_config_windows.h"
+-#elif defined(__WINRT__)
+-#include "SDL_config_winrt.h"
+-#elif defined(__MACOSX__)
+-#include "SDL_config_macosx.h"
+-#elif defined(__IPHONEOS__)
+-#include "SDL_config_iphoneos.h"
+-#elif defined(__ANDROID__)
+-#include "SDL_config_android.h"
+-#elif defined(__PSP__)
+-#include "SDL_config_psp.h"
+-#elif defined(__OS2__)
+-#include "SDL_config_os2.h"
+ #else
++#define SIZEOF_VOIDP 4
++#endif
++#define HAVE_GCC_ATOMICS 1
++/* #undef HAVE_GCC_SYNC_LOCK_TEST_AND_SET */
++
++/* Comment this if you want to build without any C library requirements */
++#define HAVE_LIBC 1
++#if HAVE_LIBC
+-/* This is a minimal configuration just to get SDL running on new platforms. */
+-#include "SDL_config_minimal.h"
+-#endif /* platform config */
+ 
++/* Useful headers */
++#define STDC_HEADERS 1
++#define HAVE_ALLOCA_H 1
++#define HAVE_CTYPE_H 1
++#define HAVE_FLOAT_H 1
++#define HAVE_ICONV_H 1
++#define HAVE_INTTYPES_H 1
++#define HAVE_LIMITS_H 1
++#define HAVE_MALLOC_H 1
++#define HAVE_MATH_H 1
++#define HAVE_MEMORY_H 1
++#define HAVE_SIGNAL_H 1
++#define HAVE_STDARG_H 1
++#define HAVE_STDINT_H 1
++#define HAVE_STDIO_H 1
++#define HAVE_STDLIB_H 1
++#define HAVE_STRINGS_H 1
++#define HAVE_STRING_H 1
++#define HAVE_SYS_TYPES_H 1
++#define HAVE_WCHAR_H 1
++/* #undef HAVE_PTHREAD_NP_H */
++/* #undef HAVE_LIBUNWIND_H */
++
++/* C library functions */
++#define HAVE_MALLOC 1
++#define HAVE_CALLOC 1
++#define HAVE_REALLOC 1
++#define HAVE_FREE 1
++#define HAVE_ALLOCA 1
++#ifndef __WIN32__ /* Don't use C runtime versions of these on Windows */
++#define HAVE_GETENV 1
++#define HAVE_SETENV 1
++#define HAVE_PUTENV 1
++#define HAVE_UNSETENV 1
+-#ifdef USING_GENERATED_CONFIG_H
+-#error Wrong SDL_config.h, check your include path?
+ #endif
++#define HAVE_QSORT 1
++#define HAVE_ABS 1
++#define HAVE_BCOPY 1
++#define HAVE_MEMSET 1
++#define HAVE_MEMCPY 1
++#define HAVE_MEMMOVE 1
++#define HAVE_MEMCMP 1
++#define HAVE_WCSLEN 1
++/* #undef HAVE_WCSLCPY */
++/* #undef HAVE_WCSLCAT */
++#define HAVE_WCSDUP 1
++#define HAVE_WCSSTR 1
++#define HAVE_WCSCMP 1
++#define HAVE_WCSNCMP 1
++#define HAVE_WCSCASECMP 1
++/* #undef HAVE__WCSICMP */
++#define HAVE_WCSNCASECMP 1
++/* #undef HAVE__WCSNICMP */
++#define HAVE_STRLEN 1
++/* #undef HAVE_STRLCPY */
++/* #undef HAVE_STRLCAT */
++/* #undef HAVE__STRREV */
++/* #undef HAVE__STRUPR */
++/* #undef HAVE__STRLWR */
++/* #undef HAVE_INDEX */
++/* #undef HAVE_RINDEX */
++#define HAVE_STRCHR 1
++#define HAVE_STRRCHR 1
++#define HAVE_STRSTR 1
++#define HAVE_STRTOK_R 1
++/* #undef HAVE_STRTOK_S */
++/* #undef HAVE_ITOA */
++/* #undef HAVE__LTOA */
++/* #undef HAVE__UITOA */
++/* #undef HAVE__ULTOA */
++#define HAVE_STRTOL 1
++#define HAVE_STRTOUL 1
++/* #undef HAVE__I64TOA */
++/* #undef HAVE__UI64TOA */
++#define HAVE_STRTOLL 1
++#define HAVE_STRTOULL 1
++/* #undef HAVE_STRTOD */
++#define HAVE_ATOI 1
++#define HAVE_ATOF 1
++#define HAVE_STRCMP 1
++#define HAVE_STRNCMP 1
++/* #undef HAVE__STRICMP */
++#define HAVE_STRCASECMP 1
++/* #undef HAVE__STRNICMP */
++#define HAVE_STRNCASECMP 1
++/* #undef HAVE_SSCANF */
++#define HAVE_VSSCANF 1
++/* #undef HAVE_SNPRINTF */
++#define HAVE_VSNPRINTF 1
++#define HAVE_M_PI /**/
++#define HAVE_ACOS 1
++#define HAVE_ACOSF 1
++#define HAVE_ASIN 1
++#define HAVE_ASINF 1
++#define HAVE_ATAN 1
++#define HAVE_ATANF 1
++#define HAVE_ATAN2 1
++#define HAVE_ATAN2F 1
++#define HAVE_CEIL 1
++#define HAVE_CEILF 1
++#define HAVE_COPYSIGN 1
++#define HAVE_COPYSIGNF 1
++#define HAVE_COS 1
++#define HAVE_COSF 1
++#define HAVE_EXP 1
++#define HAVE_EXPF 1
++#define HAVE_FABS 1
++#define HAVE_FABSF 1
++#define HAVE_FLOOR 1
++#define HAVE_FLOORF 1
++#define HAVE_FMOD 1
++#define HAVE_FMODF 1
++#define HAVE_LOG 1
++#define HAVE_LOGF 1
++#define HAVE_LOG10 1
++#define HAVE_LOG10F 1
++/* #undef HAVE_POW */
++#define HAVE_POWF 1
++#define HAVE_SCALBN 1
++#define HAVE_SCALBNF 1
++#define HAVE_SIN 1
++#define HAVE_SINF 1
++#define HAVE_SQRT 1
++#define HAVE_SQRTF 1
++#define HAVE_TAN 1
++#define HAVE_TANF 1
++#define HAVE_TRUNC 1
++#define HAVE_TRUNCF 1
++#define HAVE_FOPEN64 1
++#define HAVE_FSEEKO 1
++#define HAVE_FSEEKO64 1
++#define HAVE_SIGACTION 1
++#define HAVE_SA_SIGACTION 1
++#define HAVE_SETJMP 1
++#define HAVE_NANOSLEEP 1
++#define HAVE_SYSCONF 1
++/* #undef HAVE_SYSCTLBYNAME */
++#define HAVE_CLOCK_GETTIME 1
++/* #undef HAVE_GETPAGESIZE */
++#define HAVE_MPROTECT 1
++#define HAVE_ICONV 1
++#define HAVE_PTHREAD_SETNAME_NP 1
++/* #undef HAVE_PTHREAD_SET_NAME_NP */
++#define HAVE_SEM_TIMEDWAIT 1
++#define HAVE_GETAUXVAL 1
++/* #undef HAVE_ELF_AUX_INFO */
++#define HAVE_POLL 1
++#define HAVE__EXIT 1
++
++#else
++#define HAVE_STDARG_H 1
++#define HAVE_STDDEF_H 1
++#define HAVE_STDINT_H 1
++#endif /* HAVE_LIBC */
++
++/* #undef HAVE_ALTIVEC_H */
++/* #undef HAVE_DBUS_DBUS_H */
++/* #undef HAVE_FCITX */
++#define HAVE_SYS_INOTIFY_H 1
++#define HAVE_INOTIFY_INIT 1
++#define HAVE_INOTIFY_INIT1 1
++#define HAVE_INOTIFY 1
++/* #undef HAVE_IBUS_IBUS_H */
++/* #undef HAVE_IMMINTRIN_H */
++/* #undef HAVE_LIBUDEV_H */
++/* #undef HAVE_LIBSAMPLERATE_H */
++
++/* #undef HAVE_DDRAW_H */
++/* #undef HAVE_DINPUT_H */
++/* #undef HAVE_DSOUND_H */
++/* #undef HAVE_DXGI_H */
++/* #undef HAVE_XINPUT_H */
++
++/* #undef HAVE_MMDEVICEAPI_H */
++/* #undef HAVE_AUDIOCLIENT_H */
++/* #undef HAVE_SENSORSAPI_H */
++
++/* #undef HAVE_XINPUT_GAMEPAD_EX */
++/* #undef HAVE_XINPUT_STATE_EX */
++
++/* SDL internal assertion support */
++/* #undef SDL_DEFAULT_ASSERT_LEVEL */
++
++/* Allow disabling of core subsystems */
++/* #undef SDL_ATOMIC_DISABLED */
++/* #undef SDL_AUDIO_DISABLED */
++/* #undef SDL_CPUINFO_DISABLED */
++/* #undef SDL_EVENTS_DISABLED */
++/* #undef SDL_FILE_DISABLED */
++/* #undef SDL_JOYSTICK_DISABLED */
++/* #undef SDL_HAPTIC_DISABLED */
++/* #undef SDL_SENSOR_DISABLED */
++/* #undef SDL_LOADSO_DISABLED */
++/* #undef SDL_RENDER_DISABLED */
++/* #undef SDL_THREADS_DISABLED */
++/* #undef SDL_TIMERS_DISABLED */
++/* #undef SDL_VIDEO_DISABLED */
++/* #undef SDL_POWER_DISABLED */
++/* #undef SDL_FILESYSTEM_DISABLED */
++
++/* Enable various audio drivers */
++#define SDL_AUDIO_DRIVER_ALSA 1
++#define SDL_AUDIO_DRIVER_ALSA_DYNAMIC "libasound.so.2"
++/* #undef SDL_AUDIO_DRIVER_ANDROID */
++/* #undef SDL_AUDIO_DRIVER_ARTS */
++/* #undef SDL_AUDIO_DRIVER_ARTS_DYNAMIC */
++/* #undef SDL_AUDIO_DRIVER_COREAUDIO */
++#define SDL_AUDIO_DRIVER_DISK 1
++/* #undef SDL_AUDIO_DRIVER_DSOUND */
++#define SDL_AUDIO_DRIVER_DUMMY 1
++/* #undef SDL_AUDIO_DRIVER_EMSCRIPTEN */
++/* #undef SDL_AUDIO_DRIVER_ESD */
++/* #undef SDL_AUDIO_DRIVER_ESD_DYNAMIC */
++/* #undef SDL_AUDIO_DRIVER_FUSIONSOUND */
++/* #undef SDL_AUDIO_DRIVER_FUSIONSOUND_DYNAMIC */
++/* #undef SDL_AUDIO_DRIVER_HAIKU */
++/* #undef SDL_AUDIO_DRIVER_JACK */
++/* #undef SDL_AUDIO_DRIVER_JACK_DYNAMIC */
++/* #undef SDL_AUDIO_DRIVER_NACL */
++/* #undef SDL_AUDIO_DRIVER_NAS */
++/* #undef SDL_AUDIO_DRIVER_NAS_DYNAMIC */
++/* #undef SDL_AUDIO_DRIVER_NETBSD */
++#define SDL_AUDIO_DRIVER_OSS 1
++/* #undef SDL_AUDIO_DRIVER_OSS_SOUNDCARD_H */
++/* #undef SDL_AUDIO_DRIVER_PAUDIO */
++/* #undef SDL_AUDIO_DRIVER_PULSEAUDIO */
++/* #undef SDL_AUDIO_DRIVER_PULSEAUDIO_DYNAMIC */
++/* #undef SDL_AUDIO_DRIVER_QSA */
++/* #undef SDL_AUDIO_DRIVER_SNDIO */
++/* #undef SDL_AUDIO_DRIVER_SNDIO_DYNAMIC */
++/* #undef SDL_AUDIO_DRIVER_SUNAUDIO */
++/* #undef SDL_AUDIO_DRIVER_WASAPI */
++/* #undef SDL_AUDIO_DRIVER_WINMM */
++
++/* Enable various input drivers */
++#define SDL_INPUT_LINUXEV 1
++/* #undef SDL_INPUT_FBSDKBIO */
++#define SDL_INPUT_LINUXKD 1
++/* #undef SDL_JOYSTICK_HAIKU */
++/* #undef SDL_JOYSTICK_DINPUT */
++/* #undef SDL_JOYSTICK_XINPUT */
++/* #undef SDL_JOYSTICK_DUMMY */
++/* #undef SDL_JOYSTICK_IOKIT */
++/* #undef SDL_JOYSTICK_MFI */
++#define SDL_JOYSTICK_LINUX 1
++/* #undef SDL_JOYSTICK_ANDROID */
++/* #undef SDL_JOYSTICK_WINMM */
++/* #undef SDL_JOYSTICK_USBHID */
++/* #undef SDL_JOYSTICK_USBHID_MACHINE_JOYSTICK_H */
++#define SDL_JOYSTICK_HIDAPI 1
++/* #undef SDL_JOYSTICK_RAWINPUT */
++/* #undef SDL_JOYSTICK_EMSCRIPTEN */
++#define SDL_JOYSTICK_VIRTUAL 1
++/* #undef SDL_HAPTIC_DUMMY */
++/* #undef SDL_HAPTIC_ANDROID */
++#define SDL_HAPTIC_LINUX 1
++/* #undef SDL_HAPTIC_IOKIT */
++/* #undef SDL_HAPTIC_DINPUT */
++/* #undef SDL_HAPTIC_XINPUT */
++
++/* Enable various sensor drivers */
++/* #undef SDL_SENSOR_ANDROID */
++/* #undef SDL_SENSOR_COREMOTION */
++/* #undef SDL_SENSOR_WINDOWS */
++#define SDL_SENSOR_DUMMY 1
++
++/* Enable various shared object loading systems */
++#define SDL_LOADSO_DLOPEN 1
++/* #undef SDL_LOADSO_DUMMY */
++/* #undef SDL_LOADSO_LDG */
++/* #undef SDL_LOADSO_WINDOWS */
++
++/* Enable various threading systems */
++#define SDL_THREAD_PTHREAD 1
++#define SDL_THREAD_PTHREAD_RECURSIVE_MUTEX 1
++/* #undef SDL_THREAD_PTHREAD_RECURSIVE_MUTEX_NP */
++/* #undef SDL_THREAD_WINDOWS */
++
++/* Enable various timer systems */
++/* #undef SDL_TIMER_HAIKU */
++/* #undef SDL_TIMER_DUMMY */
++#define SDL_TIMER_UNIX 1
++/* #undef SDL_TIMER_WINDOWS */
++
++/* Enable various video drivers */
++/* #undef SDL_VIDEO_DRIVER_HAIKU */
++/* #undef SDL_VIDEO_DRIVER_COCOA */
++/* #undef SDL_VIDEO_DRIVER_DIRECTFB */
++/* #undef SDL_VIDEO_DRIVER_DIRECTFB_DYNAMIC */
++#define SDL_VIDEO_DRIVER_DUMMY 1
++/* #undef SDL_VIDEO_DRIVER_WINDOWS */
++#define SDL_VIDEO_DRIVER_WAYLAND 1
++#define SDL_VIDEO_DRIVER_WAYLAND_QT_TOUCH 1
++#define SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC "libwayland-client.so.0"
++#define SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC_EGL "libwayland-egl.so.1"
++#define SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC_CURSOR "libwayland-cursor.so.0"
++#define SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC_XKBCOMMON "libxkbcommon.so.0"
++/* #undef SDL_VIDEO_DRIVER_X11 */
++/* #undef SDL_VIDEO_DRIVER_RPI */
++/* #undef SDL_VIDEO_DRIVER_KMSDRM */
++/* #undef SDL_VIDEO_DRIVER_KMSDRM_DYNAMIC */
++/* #undef SDL_VIDEO_DRIVER_KMSDRM_DYNAMIC_GBM */
++/* #undef SDL_VIDEO_DRIVER_ANDROID */
++/* #undef SDL_VIDEO_DRIVER_EMSCRIPTEN */
++/* #undef SDL_VIDEO_DRIVER_X11_DYNAMIC */
++/* #undef SDL_VIDEO_DRIVER_X11_DYNAMIC_XEXT */
++/* #undef SDL_VIDEO_DRIVER_X11_DYNAMIC_XCURSOR */
++/* #undef SDL_VIDEO_DRIVER_X11_DYNAMIC_XINERAMA */
++/* #undef SDL_VIDEO_DRIVER_X11_DYNAMIC_XINPUT2 */
++/* #undef SDL_VIDEO_DRIVER_X11_DYNAMIC_XRANDR */
++/* #undef SDL_VIDEO_DRIVER_X11_DYNAMIC_XSS */
++/* #undef SDL_VIDEO_DRIVER_X11_DYNAMIC_XVIDMODE */
++/* #undef SDL_VIDEO_DRIVER_X11_XCURSOR */
++/* #undef SDL_VIDEO_DRIVER_X11_XDBE */
++/* #undef SDL_VIDEO_DRIVER_X11_XINERAMA */
++/* #undef SDL_VIDEO_DRIVER_X11_XINPUT2 */
++/* #undef SDL_VIDEO_DRIVER_X11_XINPUT2_SUPPORTS_MULTITOUCH */
++/* #undef SDL_VIDEO_DRIVER_X11_XRANDR */
++/* #undef SDL_VIDEO_DRIVER_X11_XSCRNSAVER */
++/* #undef SDL_VIDEO_DRIVER_X11_XSHAPE */
++/* #undef SDL_VIDEO_DRIVER_X11_XVIDMODE */
++/* #undef SDL_VIDEO_DRIVER_X11_SUPPORTS_GENERIC_EVENTS */
++/* #undef SDL_VIDEO_DRIVER_X11_CONST_PARAM_XEXTADDDISPLAY */
++/* #undef SDL_VIDEO_DRIVER_X11_HAS_XKBKEYCODETOKEYSYM */
++/* #undef SDL_VIDEO_DRIVER_NACL */
++/* #undef SDL_VIDEO_DRIVER_VIVANTE */
++/* #undef SDL_VIDEO_DRIVER_VIVANTE_VDK */
++/* #undef SDL_VIDEO_DRIVER_QNX */
++#define SDL_VIDEO_DRIVER_POCKETGOS30 1
++
++/* #undef SDL_VIDEO_RENDER_D3D */
++/* #undef SDL_VIDEO_RENDER_D3D11 */
++/* #undef SDL_VIDEO_RENDER_OGL */
++#define SDL_VIDEO_RENDER_OGL_ES 1
++#define SDL_VIDEO_RENDER_OGL_ES2 1
++/* #undef SDL_VIDEO_RENDER_DIRECTFB */
++/* #undef SDL_VIDEO_RENDER_METAL */
++
++/* Enable OpenGL support */
++/* #undef SDL_VIDEO_OPENGL */
++#define SDL_VIDEO_OPENGL_ES 1
++#define SDL_VIDEO_OPENGL_ES2 1
++/* #undef SDL_VIDEO_OPENGL_BGL */
++/* #undef SDL_VIDEO_OPENGL_CGL */
++#define SDL_VIDEO_OPENGL_EGL 1
++/* #undef SDL_VIDEO_OPENGL_GLX */
++/* #undef SDL_VIDEO_OPENGL_WGL */
++/* #undef SDL_VIDEO_OPENGL_OSMESA */
++/* #undef SDL_VIDEO_OPENGL_OSMESA_DYNAMIC */
++
++/* Enable Vulkan support */
++#define SDL_VIDEO_VULKAN 1
++
++/* Enable Metal support */
++/* #undef SDL_VIDEO_METAL */
++
++/* Enable system power support */
++#define SDL_POWER_LINUX 1
++/* #undef SDL_POWER_WINDOWS */
++/* #undef SDL_POWER_MACOSX */
++/* #undef SDL_POWER_HAIKU */
++/* #undef SDL_POWER_ANDROID */
++/* #undef SDL_POWER_EMSCRIPTEN */
++/* #undef SDL_POWER_HARDWIRED */
++
++/* Enable system filesystem support */
++/* #undef SDL_FILESYSTEM_HAIKU */
++/* #undef SDL_FILESYSTEM_COCOA */
++/* #undef SDL_FILESYSTEM_DUMMY */
++#define SDL_FILESYSTEM_UNIX 1
++/* #undef SDL_FILESYSTEM_WINDOWS */
++/* #undef SDL_FILESYSTEM_NACL */
++/* #undef SDL_FILESYSTEM_ANDROID */
++/* #undef SDL_FILESYSTEM_EMSCRIPTEN */
++
++/* Enable assembly routines */
++#define SDL_ASSEMBLY_ROUTINES 1
++/* #undef SDL_ALTIVEC_BLITTERS */
++/* #undef SDL_ARM_SIMD_BLITTERS */
++/* #undef SDL_ARM_NEON_BLITTERS */
++
++/* Enable ime support */
++#define SDL_USE_IME 1
++
++/* Enable dynamic udev support */
++/* #undef SDL_UDEV_DYNAMIC */
++
++/* Enable dynamic libusb support */
++/* #undef SDL_LIBUSB_DYNAMIC */
++
++/* Enable dynamic libsamplerate support */
++/* #undef SDL_LIBSAMPLERATE_DYNAMIC */
+ 
+ #endif /* SDL_config_h_ */
+--- a/include/SDL_config.h.cmake	2020-12-21 12:44:36.000000000 -0500
++++ b/include/SDL_config.h.cmake	2021-05-18 10:28:12.775262495 -0400
+@@ -387,6 +387,8 @@
+ #cmakedefine SDL_VIDEO_DRIVER_X11_CONST_PARAM_XEXTADDDISPLAY @SDL_VIDEO_DRIVER_X11_CONST_PARAM_XEXTADDDISPLAY@
+ #cmakedefine SDL_VIDEO_DRIVER_X11_HAS_XKBKEYCODETOKEYSYM @SDL_VIDEO_DRIVER_X11_HAS_XKBKEYCODETOKEYSYM@
+ 
++#cmakedefine SDL_VIDEO_DRIVER_POCKETGOS30 @SDL_VIDEO_DRIVER_POCKETGOS30@
++
+ #cmakedefine SDL_VIDEO_RENDER_D3D @SDL_VIDEO_RENDER_D3D@
+ #cmakedefine SDL_VIDEO_RENDER_D3D11 @SDL_VIDEO_RENDER_D3D11@
+ #cmakedefine SDL_VIDEO_RENDER_OGL @SDL_VIDEO_RENDER_OGL@
+--- a/include/SDL_config.h.in	2020-12-21 12:44:36.000000000 -0500
++++ b/include/SDL_config.h.in	2021-05-18 10:28:12.775262495 -0400
+@@ -382,6 +382,7 @@
+ #undef SDL_VIDEO_DRIVER_VIVANTE
+ #undef SDL_VIDEO_DRIVER_VIVANTE_VDK
+ #undef SDL_VIDEO_DRIVER_QNX
++#undef SDL_VIDEO_DRIVER_POCKETGOS30
+ 
+ #undef SDL_VIDEO_RENDER_D3D
+ #undef SDL_VIDEO_RENDER_D3D11
+--- a/include/SDL_hints.h	2020-12-21 12:44:36.000000000 -0500
++++ b/include/SDL_hints.h	2021-05-18 10:28:12.779262469 -0400
+@@ -1485,6 +1485,10 @@
+  */
+ #define SDL_HINT_PREFERRED_LOCALES "SDL_PREFERRED_LOCALES"
+ 
++#define SDL_HINT_JOYSTICK_IGNORE_CALIBRATION "SDL_JOYSTICK_IGNORE_CALIBRATION"
++
++#define SDL_HINT_JOYSTICK_CALIBRATION_FILE "SDL_JOYSTICK_CALIBRATION_FILE"
++
+ 
+ /**
+  *  \brief  An enumeration of hint priorities
+diff --git a/src/joystick/SDL_joystick.c b/src/joystick/SDL_joystick.c
+index 32eb7c24..0c16536a 100644
+--- a/src/joystick/SDL_joystick.c
++++ b/src/joystick/SDL_joystick.c
+@@ -90,6 +90,8 @@ static SDL_JoystickDriver *SDL_joystick_drivers[] = {
+     &SDL_DUMMY_JoystickDriver
+ #endif
+ };
++
++static SDL_bool SDL_joystick_ignore_calibration = SDL_FALSE;
+ static SDL_bool SDL_joystick_allows_background_events = SDL_FALSE;
+ static SDL_Joystick *SDL_joysticks = NULL;
+ static SDL_bool SDL_updating_joystick = SDL_FALSE;
+@@ -98,6 +100,20 @@ static SDL_atomic_t SDL_next_joystick_instance_id;
+ static int SDL_joystick_player_count = 0;
+ static SDL_JoystickID *SDL_joystick_players = NULL;
+ 
++#define JOY_MIN -32768
++#define JOY_MAX 32767
++
++struct calibration_struct {
++    Sint16 min_x;
++    Sint16 min_y;
++    Sint16 max_x;
++    Sint16 max_y;
++    Sint16 origin_x;
++    Sint16 origin_y;
++};
++
++static struct calibration_struct JOY_CALIB = { JOY_MIN, JOY_MIN, JOY_MAX, JOY_MAX, 0, 0 };
++
+ void
+ SDL_LockJoysticks(void)
+ {
+@@ -209,6 +225,32 @@ SDL_JoystickAllowBackgroundEventsChanged(void *userdata, const char *name, const
+     }
+ }
+ 
++static void SDLCALL
++SDL_JoystickIgnoreCalibrationChanged(void *userdata, const char *name, const char *oldValue, const char *hint)
++{
++    if (hint && *hint == '1') {
++        SDL_joystick_ignore_calibration = SDL_TRUE;
++    } else {
++        SDL_joystick_ignore_calibration = SDL_FALSE;
++    }
++}
++
++static void SDLCALL
++SDL_JoystickCalibrationFileChanged(void *userdata, const char *name, const char *oldValue, const char *hint)
++{
++    FILE *outfile;
++
++    outfile = fopen(hint, "r");
++    if (outfile == NULL) {
++        return;
++    }
++
++    memset(&JOY_CALIB, 0, sizeof(struct calibration_struct));
++
++    fread(&JOY_CALIB, sizeof(struct calibration_struct), 1, outfile); 
++    fclose(outfile);
++}
++
+ int
+ SDL_JoystickInit(void)
+ {
+@@ -225,6 +267,12 @@ SDL_JoystickInit(void)
+     SDL_AddHintCallback(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS,
+                         SDL_JoystickAllowBackgroundEventsChanged, NULL);
+ 
++    SDL_AddHintCallback(SDL_HINT_JOYSTICK_IGNORE_CALIBRATION,
++                        SDL_JoystickIgnoreCalibrationChanged, NULL);
++
++    SDL_AddHintCallback(SDL_HINT_JOYSTICK_CALIBRATION_FILE,
++                        SDL_JoystickCalibrationFileChanged, NULL);
++
+ #if !SDL_EVENTS_DISABLED
+     if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0) {
+         return -1;
+@@ -1291,6 +1339,21 @@ void SDL_PrivateJoystickRemoved(SDL_JoystickID device_instance)
+     SDL_UnlockJoysticks();
+ }
+ 
++static Sint32 SDL_ScaleBetween(float unscaledNum, float minAllowed, float maxAllowed, float min, float max) {
++    Sint32 scaled;
++    // Clamp the value to the min/max just incase it goes over or under
++    if (unscaledNum < min)
++        unscaledNum = min;
++    if (unscaledNum > max)
++        unscaledNum = max;
++    scaled = (maxAllowed - minAllowed) * (unscaledNum - min) / (max - min) + minAllowed;
++    if (scaled < minAllowed)
++        scaled = minAllowed;
++    if (scaled > maxAllowed)
++        scaled = maxAllowed;
++    return scaled;
++}
++
+ int
+ SDL_PrivateJoystickAxis(SDL_Joystick *joystick, Uint8 axis, Sint16 value)
+ {
+@@ -1335,6 +1398,22 @@ SDL_PrivateJoystickAxis(SDL_Joystick *joystick, Uint8 axis, Sint16 value)
+         }
+     }
+ 
++    if (SDL_joystick_ignore_calibration == SDL_FALSE) {
++        if (axis == 0) {
++            value -= JOY_CALIB.origin_x;
++            if (value > 0)
++                value = SDL_ScaleBetween(value, 0, JOY_MAX, 0, JOY_CALIB.max_x);
++            else if (value < 0)
++                value = SDL_ScaleBetween(value, JOY_MIN, 0, JOY_CALIB.min_x, 0);
++        } else if (axis == 1) {
++            value -= JOY_CALIB.origin_y;
++            if (value > 0)
++                value = SDL_ScaleBetween(value, 0, JOY_MAX, 0, JOY_CALIB.max_y);
++            else if (value < 0)
++                value = SDL_ScaleBetween(value, JOY_MIN, 0, JOY_CALIB.min_y, 0);
++        }
++    }
++
+     /* Update internal joystick state */
+     info->value = value;
+ 
+diff --git a/src/joystick/linux/SDL_sysjoystick.c b/src/joystick/linux/SDL_sysjoystick.c
+index ee4a8c19..7cd50733 100644
+--- a/src/joystick/linux/SDL_sysjoystick.c
++++ b/src/joystick/linux/SDL_sysjoystick.c
+@@ -87,6 +87,7 @@
+ #if 0
+ #define DEBUG_INPUT_EVENTS 1
+ #endif
++#define SDL_DEVICE_S30 1
+ 
+ typedef enum
+ {
+@@ -95,7 +96,9 @@ typedef enum
+     ENUMERATION_FALLBACK
+ } EnumerationMethod;
+ 
++#ifndef SDL_DEVICE_S30
+ static EnumerationMethod enumeration_method = ENUMERATION_UNSET;
++#endif
+ 
+ static int MaybeAddDevice(const char *path);
+ static int MaybeRemoveDevice(const char *path);
+@@ -152,6 +155,7 @@ IsVirtualJoystick(Uint16 vendor, Uint16 product, Uint16 version, const char *nam
+ }
+ #endif /* SDL_JOYSTICK_HIDAPI */
+ 
++#ifndef SDL_DEVICE_S30
+ static int
+ GuessIsJoystick(int fd)
+ {
+@@ -176,6 +180,7 @@ GuessIsJoystick(int fd)
+ 
+     return 0;
+ }
++#endif
+ 
+ static int
+ IsJoystick(int fd, char **name_return, SDL_JoystickGUID *guid)
+@@ -185,10 +190,12 @@ IsJoystick(int fd, char **name_return, SDL_JoystickGUID *guid)
+     char *name;
+     char product_string[128];
+ 
++#ifndef SDL_DEVICE_S30
+     /* When udev is enabled we only get joystick devices here, so there's no need to test them */
+     if (enumeration_method != ENUMERATION_LIBUDEV && !GuessIsJoystick(fd)) {
+         return 0;
+     }
++#endif
+ 
+     if (ioctl(fd, EVIOCGID, &inpid) < 0) {
+         return 0;
+@@ -203,6 +210,13 @@ IsJoystick(int fd, char **name_return, SDL_JoystickGUID *guid)
+         return 0;
+     }
+ 
++#ifdef SDL_DEVICE_S30
++    if (inpid.vendor != 0xdead && inpid.product != 0xbeef) {
++        SDL_free(name);
++        return 0;
++    }
++#endif
++
+ #ifdef SDL_JOYSTICK_HIDAPI
+     if (!IsVirtualJoystick(inpid.vendor, inpid.product, inpid.version, name) &&
+         HIDAPI_IsDevicePresent(inpid.vendor, inpid.product, inpid.version, name)) {
+@@ -301,7 +315,7 @@ MaybeAddDevice(const char *path)
+     }
+ 
+ #ifdef DEBUG_INPUT_EVENTS
+-    printf("Checking %s\n", path);
++    printf("Checking %s (%s)\n", path, name);
+ #endif
+ 
+     isstick = IsJoystick(fd, &name, &guid);

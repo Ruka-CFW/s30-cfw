@@ -101,7 +101,7 @@ define MUPEN64PLUS_CORE_INSTALL_TARGET_CMDS
 
 	# input.xml
 	mkdir -p $(TARGET_DIR)/usr/share/batocera/datainit/system/configs/mupen64
-	cp /opt/data/a12/dev/caesar/buildroot/package/emulators/mupen64plus/mupen64plus-core/controllers/input.xml \
+	cp package/emulators/mupen64plus/mupen64plus-core/controllers/input.xml \
 		$(TARGET_DIR)/usr/share/batocera/datainit/system/configs/mupen64
 endef
 

@@ -67,7 +67,7 @@ define BATOCERA_EMULATIONSTATION_RESOURCES
 
 	# es_input.cfg
 	mkdir -p $(TARGET_DIR)/usr/share/batocera/datainit/system/configs/emulationstation
-	cp /opt/data/a12/dev/github/rk3128-cfw/buildroot/package/emulationstation/batocera-emulationstation/controllers/es_input.cfg \
+	cp package/emulationstation/batocera-emulationstation/controllers/es_input.cfg \
 		$(TARGET_DIR)/usr/share/batocera/datainit/system/configs/emulationstation
 endef
 

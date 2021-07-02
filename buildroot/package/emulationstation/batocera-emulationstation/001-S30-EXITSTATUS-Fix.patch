@@ -1,0 +1,14 @@
+diff --git a/es-app/src/ApiSystem.cpp b/es-app/src/ApiSystem.cpp
+index 45314e75..3a5fee60 100644
+--- a/es-app/src/ApiSystem.cpp
++++ b/es-app/src/ApiSystem.cpp
+@@ -46,6 +46,9 @@
+ #include "Win32ApiSystem.h"
+ #endif
+ 
++// FIXME: temporary workaround for S30 compilation
++#define WEXITSTATUS(x) x
++
+ #include <pugixml/src/pugixml.hpp>
+ #include "platform.h"
+ #include "RetroAchievements.h"
