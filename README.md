@@ -2,7 +2,7 @@
 
 # PocketGo S30 Custom Firmware 
 
-This is our overlay CFW or the S30, just uncompress the SD zip folder at the top of an SD card, add the (cores)[https://github.com/Ruka-CFW/s30-cfw/releases/tag/s30-cores-20210727), your games, and you are ready to play.
+This is our overlay CFW or the S30, just uncompress the SD zip folder at the top of an SD card, add the [cores](https://github.com/Ruka-CFW/s30-cfw/releases/tag/s30-cores-20210727), your games, and you are ready to play.
 
 Our CFW is based on a subset of the [Batocera linux](https://github.com/batocera-linux/batocera.linux) as we do for our other [firmwares](https://github.com/Ruka-CFW/rk3128-cfw).
 
