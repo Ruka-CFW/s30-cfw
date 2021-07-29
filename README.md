@@ -8,10 +8,9 @@ Our CFW is based on a subset of the [Batocera linux](https://github.com/batocera
 
 ## Features:
 * EmulationStation
-* RetroArch v1.9.7
+* RetroArch v1.9.6
 * OpenBOR
 * Daphne
-* DevilutionX
 * PPSSPP
 * SDLPoP
 
