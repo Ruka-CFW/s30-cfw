@@ -32,7 +32,7 @@ Our CFW is based on a subset of the [Batocera linux](https://github.com/batocera
 ## Acknowledgements
 
 * [@bkacjios](https://github.com/bkacjios) for his original RetroArch and SDL2 rotation patches
-* [Bruma]([https://www.youtube.com/channel/UCrdNisYjDd7qI1Zv2ZLwBrQ) for posting the original teaser video on youtube
+* [Bruma](https://www.youtube.com/channel/UCrdNisYjDd7qI1Zv2ZLwBrQ) for posting the original teaser video on youtube
 * RGC's SimpleS30 for showing us the path to this hack 
 * Rutjoni, for forcing our hand to buy this device... and several others... you were right :)
 * The folks at the [#pocket-go-s30 RG discord channel](https://discord.com/channels/529983248114122762/779295877951914005)
