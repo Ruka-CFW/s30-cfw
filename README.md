@@ -16,7 +16,7 @@ Our CFW is based on a subset of the [Batocera linux](https://github.com/batocera
 
 ## Installation
 
-* Download the latest release and cores zip pack from the release link to the right (e.g. ruka-s30-20210729.zip, s30-cores-20210727.zip)
+* Download the [latest release](https://github.com/Ruka-CFW/s30-cfw/releases/tag/v0.1_murdock) and cores zip pack from the release link to the right (e.g. ruka-s30-20210729.zip, s30-cores-20210727.zip)
 * Get a FAT32 formatted SD card and: 
   * extract the contents of the release zip into that
   * extract the contents of the cores package into the cores folder 
