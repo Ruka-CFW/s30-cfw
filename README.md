@@ -38,6 +38,7 @@ Our CFW is based on a subset of the [Batocera linux](https://github.com/batocera
 * RetroArch 1.9.7 load core/load content is currently broken (since 1.9.2 where a massive refactorization happened). However it works fine via EmulationStation or if you launch a core/rom combination directly (e.g. retroarch -L <core> <rom>)
 * PPSSPP games are rotated but the menu is not
 * Several cores/ports may require custom control configuration, please use the issues to add your configurations, etc. so we can include those in future releases.
+* Our SDL2 patches rotate most of the SDL2 2D based games that use fullscreen. If you want to try a different port or engine, you may need to pass the fullscreen or force the resolution to 480 320 to get it to render properly
 
 ## Acknowledgements
 
