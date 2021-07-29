@@ -27,9 +27,6 @@ Our CFW is based on a subset of the [Batocera linux](https://github.com/batocera
 * If you used an existing SD card with your roms in it, just make sure they are in the same folder structure (e.g. roms/mame)
 * Insert the SD into your S30, power it up
 
-* [Ruka Custom Firmware Installation Guide](install.md)
-
-
 ## Notes
 * You can uncompress the zip file on top of your existing SDCard, however the bin/gmenu2x file will be overwritten. Just make a copy of that if you want to reuse. You can easily put the original one back and everything will be back to normal.
 * Roms folder structure for EmulationStation is the same as the one used in all batocera images. If you already have a batocera SDcard with your content for another device, you can just extract our installation on top of that and you can reuse the content. Note that you will need to changes paths in config/emulationstation/es_systems.cfg to match the /mnt/extsd folder that the S30 uses as the sdcard mount point.
