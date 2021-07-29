@@ -20,8 +20,10 @@ Our CFW is based on a subset of the [Batocera linux](https://github.com/batocera
 * Download the latest release and cores zip pack from the release link to the right (e.g. ruka-s30-20210729.zip, s30-cores-20210727.zip)
 * Get a FAT32 formatted SD card and: 
   * extract the contents of the release zip into that
-  * extract the contents of the cores package into the cores folder  
+  * extract the contents of the cores package into the cores folder 
   * The file structure should look like this:
+  
+  ![image](https://user-images.githubusercontent.com/4155607/127529051-1209c4fa-d6fd-4f23-8f15-b67ff5c3b254.png)
 * If you used an existing SD card with your roms in it, just make sure they are in the same folder structure (e.g. roms/mame)
 * Insert the SD into your S30, power it up
 
