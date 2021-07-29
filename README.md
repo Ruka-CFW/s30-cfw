@@ -20,7 +20,15 @@ Our CFW is based on a subset of the [Batocera linux](https://github.com/batocera
 * [Ruka Custom Firmware Installation Guide](install.md)
 * [How to Contribute](CONTRIBUTING.md)
 
+## Known Issues
+* RetroArch 1.9.7 load core/load content is currently broken (since 1.9.2 where a massive refactorization happened). However it works fine via EmulationStation or if you launch a core/rom combination directly (e.g. retroarch -L <core> <rom>)
+* PPSSPP games are rotated but the menu is not
+* Several cores/ports may require custom control configuration, please use the issues to add your configurations, etc. so we can include those in future releases.
+
 ## Acknowledgements
 
 * (@bkacjios)[https://github.com/bkacjios] for his original RetroArch and SDL2 rotation patches
+* (Bruma)[https://www.youtube.com/channel/UCrdNisYjDd7qI1Zv2ZLwBrQ] for posting the original teaser video on youtube
+* All the rest of the ruka team, you know who you are
+* The folks at the [#pocket-go-s30 RG discord channel](https://discord.com/channels/529983248114122762/779295877951914005)
 * All the folks that have been enjoying our releases
